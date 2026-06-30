@@ -21,7 +21,6 @@ body {
     padding: 20px;
 }
 
-/* Contenedor principal */
 .contenedor {
     max-width: 1400px;
     margin: 0 auto;
@@ -32,7 +31,6 @@ body {
     position: relative;
 }
 
-/* ================= LOGO SUPERIOR IZQUIERDA ================= */
 .logo-container {
     position: absolute;
     top: 20px;
@@ -54,7 +52,6 @@ body {
     display: block;
 }
 
-/* ================= HEADER / TÍTULO ================= */
 .header {
     background: linear-gradient(135deg, #2b8cbe 0%, #1a5f7a 100%);
     color: white;
@@ -85,7 +82,6 @@ body {
     opacity: 0.85;
 }
 
-/* ================= DESCRIPCIÓN ================= */
 .descripcion {
     padding: 25px 35px;
     background: #f8f9fa;
@@ -124,7 +120,6 @@ body {
     color: #2b8cbe;
 }
 
-/* ================= CONTENEDOR DEL MAPA ================= */
 .mapa-wrapper {
     padding: 20px 35px;
     background: #e9ecef;
@@ -144,7 +139,6 @@ body {
     z-index: 1;
 }
 
-/* ================= PIE DE PÁGINA ================= */
 .footer {
     background: #2c3e50;
     color: #ecf0f1;
@@ -166,7 +160,6 @@ body {
     text-decoration: underline;
 }
 
-/* ================= POPUP ================= */
 .popup {
     display: block;
     text-align: center;
@@ -213,7 +206,6 @@ body {
     background: #1a5f7a;
 }
 
-/* ================= LEAFLET AJUSTES ================= */
 .leaflet-popup-content-wrapper {
     padding: 0 !important;
     border-radius: 14px;
@@ -230,7 +222,6 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* Estilo para el tooltip de las veredas */
 .vereda-tooltip {
     background-color: rgba(0,0,0,0.75);
     border: 2px solid #2b8cbe;
@@ -244,7 +235,6 @@ body {
     white-space: nowrap;
 }
 
-/* Estilo para tooltip de ríos */
 .rio-tooltip {
     background-color: rgba(0,102,204,0.85);
     border: 1px solid #003366;
@@ -257,7 +247,6 @@ body {
     white-space: nowrap;
 }
 
-/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -300,12 +289,10 @@ body {
 
 <div class="contenedor">
     
-    <!-- LOGO SUPERIOR IZQUIERDA -->
     <div class="logo-container">
         <img src="https://arnold9507.github.io/Mapa_interactivo_Cabrera/documentos_interactivos/LogoZRC.png" alt="Logo Zona de Reserva Campesina">
     </div>
     
-    <!-- HEADER / TÍTULO -->
     <div class="header">
         <h1>
             🌄 Cabrera, Cundinamarca
@@ -319,43 +306,37 @@ body {
         </div>
     </div>
     
-    <!-- DESCRIPCIÓN -->
     <div class="descripcion">
         <h2>📖 Sobre este mapa interactivo</h2>
         <p>
             <strong>Cabrera</strong> es un municipio colombiano ubicado en el departamento de Cundinamarca, 
-            conocido por su belleza natural, paisajes montañosos y su rica cultura campesina. Este mapa 
-            interactivo te permite explorar los ríos y las veredas del municipio, además de puntos de interés.
+            conocido por su belleza natural, paisajes montañosos y su rica cultura campesina.
         </p>
         <p>
             Puedes activar o desactivar las capas de veredas y ríos usando el control en la esquina superior derecha del mapa. 
-            También puedes cambiar entre diferentes tipos de mapa base (Satélite, Callejero, Híbrido).
-            <strong>📍 Pasa el mouse sobre cada vereda o río para ver su nombre.</strong>
+            También puedes cambiar entre diferentes tipos de mapa base.
+            <strong>📍 Haz clic en los marcadores para ver las imágenes.</strong>
         </p>
         <div class="datos">
-            <div class="dato"><strong>🗺️ Capas disponibles:</strong> Veredas y Ríos</div>
-            <div class="dato"><strong>💧 Ríos:</strong> Capa azul con nombres</div>
-            <div class="dato"><strong>🏡 Veredas:</strong> Polígonos con nombres al pasar el mouse</div>
-            <div class="dato"><strong>📍 Puntos de interés:</strong> La Vuelta de la Lucha y Frijol Chocho</div>
+            <div class="dato"><strong>🗺️ Capas:</strong> Veredas y Ríos</div>
+            <div class="dato"><strong>📍 Punto 1:</strong> La Vuelta de la Lucha (3 imágenes)</div>
+            <div class="dato"><strong>📍 Punto 2:</strong> Frijol Chocho (1 imagen)</div>
         </div>
     </div>
     
-    <!-- CONTENEDOR DEL MAPA -->
     <div class="mapa-wrapper">
-        <div class="label">🗺️ EXPLORA EL MAPA - Haz clic en los marcadores para ver las imágenes</div>
+        <div class="label">🗺️ EXPLORA EL MAPA - Haz clic en los marcadores coloridos</div>
         <div id="map"></div>
     </div>
     
-    <!-- FOOTER / PIE DE PÁGINA -->
     <div class="footer">
     <p>📌 Mapa con capas de veredas y ríos del municipio de Cabrera</p>
-    <p>🗺️ Datos geográficos: OpenStreetMap, Esri, Google Maps | 🗺️ Veredas y ríos: Cabrera</p>
+    <p>🗺️ Datos geográficos: OpenStreetMap, Esri, Google Maps</p>
     <p>
         <a href="mapa-solo.html" target="_blank" style="display: inline-block; background: #2b8cbe; color: white; padding: 8px 20px; border-radius: 25px; text-decoration: none; margin-top: 10px;">
-            🗺️ Ver mapa en pantalla completa → Abrir en nueva ventana
+            🗺️ Ver mapa en pantalla completa
         </a>
     </p>
-    <p>🌐 Proyecto de visualización cartográfica | <a href="#">Volver arriba ↑</a></p>
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -363,37 +344,33 @@ body {
 <script>
 
 // ================= INICIALIZAR MAPA =================
-var map = L.map('map').setView([3.9756, -74.4797], 15);
+var map = L.map('map').setView([3.9756, -74.4797], 16);
 
 // ================= MAPAS BASE =================
-// Google Satelital (principal)
 var googleSatelite = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     attribution: '&copy; Google Maps',
     maxZoom: 22,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 }).addTo(map);
 
-// Google Calles
 var googleCalles = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
     attribution: '&copy; Google Maps',
     maxZoom: 22,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
-// Google Híbrido
 var googleHibrido = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
     attribution: '&copy; Google Maps',
     maxZoom: 22,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
-// OpenStreetMap
 var osmCalles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap'
 });
 
-// ================= FUNCIONES CARRUSEL =================
-function crearPopup(imagenes, id, titulo) {
+// ================= FUNCIONES PARA POPUPS =================
+function crearPopupCarrusel(imagenes, id, titulo) {
     let html = `
     <div class="popup">
         <h4>${titulo}</h4>
@@ -415,7 +392,7 @@ function crearPopupSimple(imagen, titulo, descripcion) {
     let html = `
     <div class="popup">
         <h4>${titulo}</h4>
-        <img src="${imagen.ruta}" style="width:100%; max-width:400px; max-height:250px; object-fit:cover; border-radius:10px; margin:10px 0; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+        <img src="${imagen.ruta}">
         <p>${descripcion}</p>
     </div>
     `;
@@ -444,45 +421,49 @@ function prev(id) {
 const base = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/P16junio/";
 
 // ================= ICONOS PERSONALIZADOS =================
-function crearIcono(color, nombre) {
+function crearIcono(color, emoji) {
     return L.divIcon({
         className: 'custom-div-icon',
-        html: `<div style="background-color: ${color}; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: bold; color: white; font-size: 18px; font-family: Arial;">
-                    ${nombre}
+        html: `<div style="background-color: ${color}; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.5); font-size: 20px; line-height: 1;">
+                    ${emoji}
                 </div>`,
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
-        popupAnchor: [0, -18]
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -20]
     });
 }
 
 // ================= PUNTO 1: VUELTA DE LA LUCHA =================
 // Coordenadas: 3°58'32.136''N 74°28'46.746''W
 // Decimal: 3.9755933, -74.4796517
-var iconoVueltaLucha = crearIcono('#8e44ad', '🏔️');
+var iconoVuelta = crearIcono('#8e44ad', '🏔️');
 
-var imgs_vuelta = [
+var imagenesVuelta = [
     {ruta: base + "Vueltalucha/P1Vueltalucha1.JPG", desc: "Vista panorámica de La Vuelta de la Lucha"},
     {ruta: base + "Vueltalucha/P1Vueltalucha2.JPG", desc: "Paisaje característico de la zona"},
     {ruta: base + "Vueltalucha/P1Vueltalucha3.JPG", desc: "Vegetación y biodiversidad local"}
 ];
 
-L.marker([3.9755933, -74.4796517], { icon: iconoVueltaLucha })
-.addTo(map)
-.bindPopup(crearPopup(imgs_vuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
+var markerVuelta = L.marker([3.9755933, -74.4796517], { icon: iconoVuelta })
+    .addTo(map)
+    .bindPopup(crearPopupCarrusel(imagenesVuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
 
 // ================= PUNTO 2: FRIJOL CHOCHO =================
 // Coordenadas: 3°58'32.133''N 74°28'46.740''W
 // Decimal: 3.9755925, -74.47965
-var iconoFrijolChocho = crearIcono('#e67e22', '🌱');
+var iconoFrijol = crearIcono('#e67e22', '🌱');
 
-var img_frijol = {
+var imagenFrijol = {
     ruta: base + "Frijolchocho/P2Frijolchocho1.JPG"
 };
 
-L.marker([3.9755925, -74.47965], { icon: iconoFrijolChocho })
-.addTo(map)
-.bindPopup(crearPopupSimple(img_frijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
+var markerFrijol = L.marker([3.9755925, -74.47965], { icon: iconoFrijol })
+    .addTo(map)
+    .bindPopup(crearPopupSimple(imagenFrijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
+
+console.log("✅ Marcadores agregados:");
+console.log("  🏔️ La Vuelta de la Lucha en:", markerVuelta.getLatLng());
+console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
 
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
@@ -495,10 +476,9 @@ var baseMaps = {
 var overlayMaps = {};
 var controlAgregado = false;
 
-// ================= GEOJSON - VEREDAS DE CABRERA =================
+// ================= GEOJSON - VEREDAS =================
 const vectorBase = "https://arnold9507.github.io/Mapa_interactivo_Cabrera/vectorial/";
 
-// Cargar capa de veredas de Cabrera
 fetch(vectorBase + "cabrera_veredas.geojson")
 .then(res => res.json())
 .then(data => {
@@ -531,15 +511,15 @@ fetch(vectorBase + "cabrera_veredas.geojson")
         controlAgregado = true;
     }
 })
-.catch(err => console.log("Error cargando veredas de Cabrera:", err));
+.catch(err => console.log("Error cargando veredas:", err));
 
-// ================= RÍOS CABRERA =================
+// ================= GEOJSON - RÍOS =================
 fetch(vectorBase + "rios_cabrera.geojson")
 .then(res => res.json())
 .then(data => {
-    console.log("✅ Archivo rios_cabrera.geojson cargado correctamente");
+    console.log("✅ Ríos cargados correctamente");
     
-    var capaRiosCabrera = L.geoJSON(data, {
+    var capaRios = L.geoJSON(data, {
         style: {
             color: "#0066ff",
             weight: 3,
@@ -551,25 +531,8 @@ fetch(vectorBase + "rios_cabrera.geojson")
                 var nombreRio = feature.properties.nombre || 
                                feature.properties.NOMBRE || 
                                feature.properties.name ||
-                               feature.properties.NOMBRE_RIO ||
-                               feature.properties.RIO ||
                                "Río";
-                
-                if (nombreRio === "Río" || !nombreRio) {
-                    if (feature.properties.NAM) nombreRio = feature.properties.NAM;
-                    else if (feature.properties.FULLNAME) nombreRio = feature.properties.FULLNAME;
-                    else if (feature.properties.waterway) nombreRio = feature.properties.waterway;
-                }
-                
                 layer.bindTooltip("💧 " + nombreRio, {
-                    permanent: false,
-                    direction: 'center',
-                    className: 'rio-tooltip',
-                    sticky: true,
-                    offset: [0, 0]
-                });
-            } else {
-                layer.bindTooltip("💧 Curso de agua", {
                     permanent: false,
                     direction: 'center',
                     className: 'rio-tooltip',
@@ -579,7 +542,7 @@ fetch(vectorBase + "rios_cabrera.geojson")
         }
     }).addTo(map);
     
-    overlayMaps["💧 Ríos de Cabrera"] = capaRiosCabrera;
+    overlayMaps["💧 Ríos de Cabrera"] = capaRios;
     
     if (controlAgregado === false && Object.keys(overlayMaps).length >= 1) {
         L.control.layers(baseMaps, overlayMaps, {
@@ -589,14 +552,15 @@ fetch(vectorBase + "rios_cabrera.geojson")
         controlAgregado = true;
     }
 })
-.catch(err => {
-    console.error("❌ Error cargando rios_cabrera.geojson:", err);
-});
+.catch(err => console.error("Error cargando ríos:", err));
 
-console.log("✅ Mapa interactivo cargado correctamente");
-console.log("📍 Puntos de interés:");
-console.log("   🏔️ La Vuelta de la Lucha (3.9755933, -74.4796517)");
-console.log("   🌱 Frijol Chocho (3.9755925, -74.47965)");
+// ================= ZOOM A LOS PUNTOS =================
+// Crear un grupo de marcadores para ajustar el zoom
+var grupoPuntos = L.featureGroup([markerVuelta, markerFrijol]).addTo(map);
+map.fitBounds(grupoPuntos.getBounds(), { padding: [50, 50] });
+
+console.log("✅ Mapa completamente cargado");
+console.log("📍 Los dos puntos de interés están visibles en el mapa");
 
 </script>
 
