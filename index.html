@@ -363,8 +363,8 @@ body {
             <strong>📍 Pasa el mouse sobre cada vereda o río para ver su nombre.</strong>
         </p>
         <div class="datos">
-            <div class="dato"><strong>📍 Puntos destacados:</strong> 4 lugares + puntos adicionales disponibles</div>
-            <div class="dato"><strong>📸 Fotografías:</strong> 11 imágenes</div>
+            <div class="dato"><strong>📍 Puntos destacados:</strong> 5 lugares + puntos adicionales disponibles</div>
+            <div class="dato"><strong>📸 Fotografías:</strong> 18+ imágenes</div>
             <div class="dato"><strong>🎵 Contenido de audio:</strong> Himno de Cabrera disponible</div>
             <div class="dato"><strong>🎥 Contenido de video:</strong> Avistamiento de Oso Andino</div>
             <div class="dato"><strong>🗺️ Capas disponibles:</strong> Veredas, Ríos y Caminos</div>
@@ -499,6 +499,7 @@ function crearIcono(color, nombre) {
 var iconoPunto1 = crearIcono('#2b8cbe', '★');
 var iconoPunto2 = crearIcono('#31a354', '🌲');
 var iconoPunto3 = crearIcono('#e6550d', '🌸');
+var iconoPunto4 = crearIcono('#8e44ad', '🏔️'); // Nuevo icono para La Vuelta de la Lucha
 var iconoAudio = crearIcono('#9b59b6', '🎵');
 var iconoVideo = crearIcono('#e74c3c', '🐻');
 
@@ -554,6 +555,26 @@ var imgs_p3 = [
 L.marker([3.9708, -74.4736], { icon: iconoPunto3 })
 .addTo(map)
 .bindPopup(crearPopup(imgs_p3, "p3", "🌸 Santuario de Flores"));
+
+// ================= NUEVO PUNTO 4: LA VUELTA DE LA LUCHA =================
+// Coordenadas: 3°58'32.136''N 74°28'46.746''W
+// Convertidas a decimal: 3.9755933, -74.4796517
+var imgs_p4 = [
+    {ruta: base + "Vueltalucha/img1.jpg", desc: "Vista panorámica de La Vuelta de la Lucha"},
+    {ruta: base + "Vueltalucha/img2.jpg", desc: "Paisaje característico de la zona"},
+    {ruta: base + "Vueltalucha/img3.jpg", desc: "Vegetación y biodiversidad local"},
+    {ruta: base + "Vueltalucha/img4.jpg", desc: "Camino tradicional de la vereda"},
+    {ruta: base + "Vueltalucha/img5.jpg", desc: "Cultivos típicos de la región"},
+    {ruta: base + "Vueltalucha/img6.jpg", desc: "Vista del valle desde el punto"},
+    {ruta: base + "Vueltalucha/img7.jpg", desc: "Arquitectura campesina tradicional"},
+    {ruta: base + "Vueltalucha/img8.jpg", desc: "Fauna silvestre de la zona"},
+    {ruta: base + "Vueltalucha/img9.jpg", desc: "Atardecer en La Vuelta de la Lucha"},
+    {ruta: base + "Vueltalucha/img10.jpg", desc: "Vista de la montaña y el cielo"}
+];
+
+L.marker([3.9755933, -74.4796517], { icon: iconoPunto4 })
+.addTo(map)
+.bindPopup(crearPopup(imgs_p4, "p4", "🏔️ La Vuelta de la Lucha"));
 
 // ================= NUEVO PUNTO DE VIDEO (OSO ANDINO) =================
 var videoOso = {
@@ -739,6 +760,8 @@ console.log("💧 Los ríos de Cabrera se muestran en color AZUL (archivo: rios_
 console.log("💡 Los caminos se muestran en color naranja punteado (si el archivo existe)");
 console.log("💡 El himno de Cabrera está disponible en el marcador 🎵 del parque principal");
 console.log("🎥 Nuevo punto de video: Avistamiento de Oso Andino en coordenadas 3.905618, -74.514832");
+console.log("🏔️ Nuevo punto 'La Vuelta de la Lucha' agregado en 3.9755933, -74.4796517");
+console.log("📸 Se cargaron todas las imágenes de la carpeta Vueltalucha (10 imágenes)");
 console.log("📁 Carpeta vectorial:", vectorBase);
 console.log("💡 Para agregar más puntos, sigue las instrucciones comentadas en el código");
 
