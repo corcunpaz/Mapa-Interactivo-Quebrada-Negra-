@@ -353,35 +353,30 @@ body {
         <p>
             <strong>Cabrera</strong> es un municipio colombiano ubicado en el departamento de Cundinamarca, 
             conocido por su belleza natural, paisajes montañosos y su rica cultura campesina. Este mapa 
-            interactivo te permite explorar algunos de los lugares más representativos del municipio, 
-            con fotografías y descripciones de cada punto de interés.
+            interactivo te permite explorar los ríos y las veredas del municipio.
         </p>
         <p>
-            Haz clic en los marcadores de colores para ver las imágenes y descripciones. 
-            Puedes activar o desactivar las capas de veredas, ríos y caminos usando el control en la esquina superior derecha del mapa. 
+            Puedes activar o desactivar las capas de veredas y ríos usando el control en la esquina superior derecha del mapa. 
             También puedes cambiar entre diferentes tipos de mapa base (Satélite, Callejero, Híbrido).
             <strong>📍 Pasa el mouse sobre cada vereda o río para ver su nombre.</strong>
         </p>
         <div class="datos">
-            <div class="dato"><strong>📍 Puntos destacados:</strong> 5 lugares + puntos adicionales disponibles</div>
-            <div class="dato"><strong>📸 Fotografías:</strong> 18+ imágenes</div>
-            <div class="dato"><strong>🎵 Contenido de audio:</strong> Himno de Cabrera disponible</div>
-            <div class="dato"><strong>🎥 Contenido de video:</strong> Avistamiento de Oso Andino</div>
-            <div class="dato"><strong>🗺️ Capas disponibles:</strong> Veredas, Ríos y Caminos</div>
+            <div class="dato"><strong>🗺️ Capas disponibles:</strong> Veredas y Ríos</div>
+            <div class="dato"><strong>💧 Ríos:</strong> Capa azul con nombres</div>
+            <div class="dato"><strong>🏡 Veredas:</strong> Polígonos con nombres al pasar el mouse</div>
         </div>
     </div>
     
     <!-- CONTENEDOR DEL MAPA -->
     <div class="mapa-wrapper">
-        <div class="label">🗺️ EXPLORA EL MAPA - Haz clic en los marcadores coloridos | Pasa el mouse sobre las veredas y ríos</div>
+        <div class="label">🗺️ EXPLORA EL MAPA - Pasa el mouse sobre las veredas y ríos para ver sus nombres</div>
         <div id="map"></div>
     </div>
     
     <!-- FOOTER / PIE DE PÁGINA -->
     <div class="footer">
-    <p>📌 Los puntos marcados representan lugares de interés turístico y cultural de Cabrera</p>
-    <p>📸 Las imágenes son referenciales | 🎵 Audios representativos del folclor local | 🎥 Videos de fauna y naturaleza</p>
-    <p>🗺️ Datos geográficos: OpenStreetMap, Esri, Google Maps | 🗺️ Veredas, ríos y caminos: Cabrera</p>
+    <p>📌 Mapa con capas de veredas y ríos del municipio de Cabrera</p>
+    <p>🗺️ Datos geográficos: OpenStreetMap, Esri, Google Maps | 🗺️ Veredas y ríos: Cabrera</p>
     <p>
         <a href="mapa-solo.html" target="_blank" style="display: inline-block; background: #2b8cbe; color: white; padding: 8px 20px; border-radius: 25px; text-decoration: none; margin-top: 10px;">
             🗺️ Ver mapa en pantalla completa → Abrir en nueva ventana
@@ -423,169 +418,6 @@ var googleHibrido = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z=
 var osmCalles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap'
 });
-
-// ================= CARRUSEL =================
-function crearPopup(imagenes, id, titulo) {
-    let html = `
-    <div class="popup">
-        <h4>${titulo}</h4>
-        <img id="img_${id}" src="${imagenes[0].ruta}">
-        <p id="desc_${id}">${imagenes[0].desc}</p>
-        <div>
-            <button onclick="prev('${id}')">◀ Anterior</button>
-            <button onclick="next('${id}')">Siguiente ▶</button>
-        </div>
-        <p id="count_${id}" style="margin-top: 8px; font-size: 12px;">1 / ${imagenes.length}</p>
-    </div>
-    `;
-    window[`imgs_${id}`] = imagenes;
-    window[`i_${id}`] = 0;
-    return html;
-}
-
-function update(id) {
-    let i = window[`i_${id}`];
-    let imgs = window[`imgs_${id}`];
-    document.getElementById(`img_${id}`).src = imgs[i].ruta;
-    document.getElementById(`desc_${id}`).innerText = imgs[i].desc;
-    document.getElementById(`count_${id}`).innerText = (i+1) + " / " + imgs.length;
-}
-
-function next(id) {
-    window[`i_${id}`] = (window[`i_${id}`] + 1) % window[`imgs_${id}`].length;
-    update(id);
-}
-
-function prev(id) {
-    window[`i_${id}`] = (window[`i_${id}`] - 1 + window[`imgs_${id}`].length) % window[`imgs_${id}`].length;
-    update(id);
-}
-
-// Función para crear popups con video
-function crearPopupVideo(videoInfo, id, titulo) {
-    let html = `
-    <div class="popup">
-        <h4>${titulo}</h4>
-        <video controls>
-            <source src="${videoInfo.ruta}" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-        </video>
-        <p style="margin: 10px 0 5px 0;">${videoInfo.desc}</p>
-        <div class="video-info">
-            🎥 Duración: ${videoInfo.duracion} | 🐻 Avistamiento de fauna silvestre
-        </div>
-    </div>
-    `;
-    return html;
-}
-
-// ================= BASE DE IMÁGENES Y VIDEOS =================
-const base = "https://arnold9507.github.io/Mapa_interactivo_Cabrera/documentos_interactivos/";
-const baseAudio = "https://arnold9507.github.io/Mapa_interactivo_Cabrera/";
-
-// ================= ICONOS PERSONALIZADOS =================
-function crearIcono(color, nombre) {
-    return L.divIcon({
-        className: 'custom-div-icon',
-        html: `<div style="background-color: ${color}; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: bold; color: white; font-size: 18px; font-family: Arial;">
-                    ${nombre}
-                </div>`,
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
-        popupAnchor: [0, -18]
-    });
-}
-
-var iconoPunto1 = crearIcono('#2b8cbe', '★');
-var iconoPunto2 = crearIcono('#31a354', '🌲');
-var iconoPunto3 = crearIcono('#e6550d', '🌸');
-var iconoPunto4 = crearIcono('#8e44ad', '🏔️'); // Nuevo icono para La Vuelta de la Lucha
-var iconoAudio = crearIcono('#9b59b6', '🎵');
-var iconoVideo = crearIcono('#e74c3c', '🐻');
-
-// Función especializada para crear popups con reproductor de audio
-function crearPopupAudio(audioInfo, id, titulo) {
-    let html = `
-    <div class="popup">
-        <h4>${titulo}</h4>
-        <audio controls>
-            <source src="${audioInfo.ruta}" type="audio/mpeg">
-            Tu navegador no soporta el elemento de audio.
-        </audio>
-        <p style="margin: 10px 0 5px 0;">${audioInfo.desc}</p>
-        <div class="audio-info">
-            🎵 Duración: ${audioInfo.duracion} | 📍 Punto de interés sonoro
-        </div>
-    </div>
-    `;
-    return html;
-}
-
-// ================= PUNTO 1 (EXISTENTE) =================
-var imgs_p1 = [
-    {ruta: base + "cab.jpg", desc: "Parque central - Corazón del municipio"},
-    {ruta: base + "monta4.jpg", desc: "Vista del pueblo desde las montañas"},
-    {ruta: base + "pana.jpg", desc: "Escuela rural - Tradición educativa"}
-];
-
-L.marker([3.9863, -74.4834], { icon: iconoPunto1 })
-.addTo(map)
-.bindPopup(crearPopup(imgs_p1, "p1", "🏙️ Parque Principal"));
-
-// ================= PUNTO 2 (EXISTENTE) =================
-var imgs_p2 = [
-    {ruta: base + "monta1.jpg", desc: "Un amigable habitante local"},
-    {ruta: base + "monta2.jpg", desc: "Paisaje montañoso característico"},
-    {ruta: base + "monta3.jpg", desc: "Diversidad de insectos"},
-    {ruta: base + "monta4.jpg", desc: "Vista panorámica del casco urbano"},
-    {ruta: base + "monta5.jpg", desc: "Vereda típica campesina"},
-    {ruta: base + "monta6.jpg", desc: "Río cristalino - Fuente de vida"}
-];
-
-L.marker([3.9840, -74.4884], { icon: iconoPunto2 })
-.addTo(map)
-.bindPopup(crearPopup(imgs_p2, "p2", "🌳 Mirador Natural"));
-
-// ================= PUNTO 3 (EXISTENTE) =================
-var imgs_p3 = [
-    {ruta: base + "flor1.jpg", desc: "Flor silvestre de la región"},
-    {ruta: base + "flor2.jpg", desc: "Orquídea - Especie protegida"}
-];
-
-L.marker([3.9708, -74.4736], { icon: iconoPunto3 })
-.addTo(map)
-.bindPopup(crearPopup(imgs_p3, "p3", "🌸 Santuario de Flores"));
-
-// ================= NUEVO PUNTO 4: LA VUELTA DE LA LUCHA =================
-// Coordenadas: 3°58'32.136''N 74°28'46.746''W
-// Convertidas a decimal: 3.9755933, -74.4796517
-var imgs_p4 = [
-    {ruta: base + "Vueltalucha/img1.jpg", desc: "Vista panorámica de La Vuelta de la Lucha"},
-    {ruta: base + "Vueltalucha/img2.jpg", desc: "Paisaje característico de la zona"},
-    {ruta: base + "Vueltalucha/img3.jpg", desc: "Vegetación y biodiversidad local"},
-    {ruta: base + "Vueltalucha/img4.jpg", desc: "Camino tradicional de la vereda"},
-    {ruta: base + "Vueltalucha/img5.jpg", desc: "Cultivos típicos de la región"},
-    {ruta: base + "Vueltalucha/img6.jpg", desc: "Vista del valle desde el punto"},
-    {ruta: base + "Vueltalucha/img7.jpg", desc: "Arquitectura campesina tradicional"},
-    {ruta: base + "Vueltalucha/img8.jpg", desc: "Fauna silvestre de la zona"},
-    {ruta: base + "Vueltalucha/img9.jpg", desc: "Atardecer en La Vuelta de la Lucha"},
-    {ruta: base + "Vueltalucha/img10.jpg", desc: "Vista de la montaña y el cielo"}
-];
-
-L.marker([3.9755933, -74.4796517], { icon: iconoPunto4 })
-.addTo(map)
-.bindPopup(crearPopup(imgs_p4, "p4", "🏔️ La Vuelta de la Lucha"));
-
-// ================= NUEVO PUNTO DE VIDEO (OSO ANDINO) =================
-var videoOso = {
-    ruta: base + "VideoOso.mp4",
-    desc: "Oso Andino (Tremarctos ornatus) transitando por el corredor biológico de la Zona de Reserva Campesina de Cabrera. Esta especie es el jardinero de los bosques y es indicador de la conservación del Bosque Alto Andino",
-    duracion: "1:30"
-};
-
-L.marker([3.905618293938581, -74.51483176447742], { icon: iconoVideo })
-.addTo(map)
-.bindPopup(crearPopupVideo(videoOso, "video_oso", "🐻 Avistamiento de Oso Andino"));
 
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
@@ -636,7 +468,7 @@ fetch(vectorBase + "cabrera_veredas.geojson")
 })
 .catch(err => console.log("Error cargando veredas de Cabrera:", err));
 
-// ================= RÍOS CABRERA (AZUL) - NUEVO ARCHIVO AGREGADO =================
+// ================= RÍOS CABRERA (AZUL) =================
 fetch(vectorBase + "rios_cabrera.geojson")
 .then(res => res.json())
 .then(data => {
@@ -653,7 +485,6 @@ fetch(vectorBase + "rios_cabrera.geojson")
         onEachFeature: function(feature, layer) {
             // Agregar tooltip con nombre del río si existe
             if (feature.properties) {
-                // Buscar posible nombre del río en diferentes propiedades
                 var nombreRio = feature.properties.nombre || 
                                feature.properties.NOMBRE || 
                                feature.properties.name ||
@@ -661,7 +492,6 @@ fetch(vectorBase + "rios_cabrera.geojson")
                                feature.properties.RIO ||
                                "Río";
                 
-                // Si el nombre es genérico o no existe, intentar identificar por otros campos
                 if (nombreRio === "Río" || !nombreRio) {
                     if (feature.properties.NAM) nombreRio = feature.properties.NAM;
                     else if (feature.properties.FULLNAME) nombreRio = feature.properties.FULLNAME;
@@ -686,7 +516,7 @@ fetch(vectorBase + "rios_cabrera.geojson")
         }
     }).addTo(map);
     
-    overlayMaps["💧 Ríos de Cabrera (Azul)"] = capaRiosCabrera;
+    overlayMaps["💧 Ríos de Cabrera"] = capaRiosCabrera;
     
     if (controlAgregado === false && Object.keys(overlayMaps).length >= 1) {
         L.control.layers(baseMaps, overlayMaps, {
@@ -699,71 +529,11 @@ fetch(vectorBase + "rios_cabrera.geojson")
 .catch(err => {
     console.error("❌ Error cargando rios_cabrera.geojson:", err);
     console.warn("💡 Verifica que el archivo 'rios_cabrera.geojson' existe en la carpeta vectorial/");
-    console.warm("📁 Ruta esperada:", vectorBase + "rios_cabrera.geojson");
-});
-
-// ================= CAMINOS CABRERA (OPCIONAL) =================
-// Cargar capa de caminos si existe
-fetch(vectorBase + "caminos_cabrera.geojson")
-.then(res => {
-    if (res.ok) {
-        return res.json();
-    } else {
-        throw new Error("Archivo caminos_cabrera.geojson no encontrado");
-    }
-})
-.then(data => {
-    console.log("✅ Archivo caminos_cabrera.geojson cargado correctamente (opcional)");
-    
-    var capaCaminos = L.geoJSON(data, {
-        style: {
-            color: "#ff6600",      // Color naranja para caminos
-            weight: 2,             // Grosor de la línea
-            opacity: 0.8,
-            dashArray: "5, 5"      // Línea punteada para distinguir de ríos
-        },
-        onEachFeature: function(feature, layer) {
-            if (feature.properties) {
-                var nombreCamino = feature.properties.nombre || 
-                                  feature.properties.NAM ||
-                                  feature.properties.name ||
-                                  "Camino";
-                layer.bindTooltip("🟠 " + nombreCamino, {
-                    permanent: false,
-                    direction: 'center',
-                    className: 'rio-tooltip',
-                    sticky: true
-                });
-            }
-        }
-    }).addTo(map);
-    
-    overlayMaps["🟠 Caminos de Cabrera"] = capaCaminos;
-    
-    // Actualizar el control de capas si ya existe
-    if (controlAgregado) {
-        map.removeControl(map.controlLayers);
-        map.controlLayers = L.control.layers(baseMaps, overlayMaps, {
-            collapsed: false,
-            position: 'topright'
-        }).addTo(map);
-    }
-})
-.catch(err => {
-    // No mostrar error si el archivo no existe (es opcional)
-    console.log("ℹ️ Archivo caminos_cabrera.geojson no disponible (opcional)");
 });
 
 console.log("✅ Mapa interactivo cargado correctamente");
 console.log("💡 Las veredas de Cabrera se muestran con tooltips que aparecen al pasar el mouse");
 console.log("💧 Los ríos de Cabrera se muestran en color AZUL (archivo: rios_cabrera.geojson)");
-console.log("💡 Los caminos se muestran en color naranja punteado (si el archivo existe)");
-console.log("💡 El himno de Cabrera está disponible en el marcador 🎵 del parque principal");
-console.log("🎥 Nuevo punto de video: Avistamiento de Oso Andino en coordenadas 3.905618, -74.514832");
-console.log("🏔️ Nuevo punto 'La Vuelta de la Lucha' agregado en 3.9755933, -74.4796517");
-console.log("📸 Se cargaron todas las imágenes de la carpeta Vueltalucha (10 imágenes)");
-console.log("📁 Carpeta vectorial:", vectorBase);
-console.log("💡 Para agregar más puntos, sigue las instrucciones comentadas en el código");
 
 </script>
 
