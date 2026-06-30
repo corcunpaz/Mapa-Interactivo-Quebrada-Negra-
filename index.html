@@ -206,6 +206,17 @@ body {
     background: #1a5f7a;
 }
 
+.popup-error {
+    color: #e74c3c;
+    padding: 20px;
+    text-align: center;
+}
+
+.popup-error img {
+    max-width: 100px;
+    margin: 10px auto;
+}
+
 .leaflet-popup-content-wrapper {
     padding: 0 !important;
     border-radius: 14px;
@@ -374,7 +385,7 @@ function crearPopupCarrusel(imagenes, id, titulo) {
     let html = `
     <div class="popup">
         <h4>${titulo}</h4>
-        <img id="img_${id}" src="${imagenes[0].ruta}">
+        <img id="img_${id}" src="${imagenes[0].ruta}" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada'">
         <p id="desc_${id}">${imagenes[0].desc}</p>
         <div>
             <button onclick="prev('${id}')">◀ Anterior</button>
@@ -392,7 +403,7 @@ function crearPopupSimple(imagen, titulo, descripcion) {
     let html = `
     <div class="popup">
         <h4>${titulo}</h4>
-        <img src="${imagen.ruta}">
+        <img src="${imagen.ruta}" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada'">
         <p>${descripcion}</p>
     </div>
     `;
@@ -402,7 +413,11 @@ function crearPopupSimple(imagen, titulo, descripcion) {
 function update(id) {
     let i = window[`i_${id}`];
     let imgs = window[`imgs_${id}`];
-    document.getElementById(`img_${id}`).src = imgs[i].ruta;
+    let imgElement = document.getElementById(`img_${id}`);
+    imgElement.src = imgs[i].ruta;
+    imgElement.onerror = function() {
+        this.src = 'https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada';
+    };
     document.getElementById(`desc_${id}`).innerText = imgs[i].desc;
     document.getElementById(`count_${id}`).innerText = (i+1) + " / " + imgs.length;
 }
@@ -418,7 +433,8 @@ function prev(id) {
 }
 
 // ================= BASE DE IMÁGENES =================
-const base = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/P16junio/";
+// Usando la ruta correcta para las imágenes
+const base = "https://arnold9507.github.io/Mapa_interactivo_Cabrera/documentos_interactivos/P16junio/";
 
 // ================= ICONOS PERSONALIZADOS =================
 function crearIcono(color, emoji) {
@@ -444,6 +460,8 @@ var imagenesVuelta = [
     {ruta: base + "Vueltalucha/P1Vueltalucha3.JPG", desc: "Vegetación y biodiversidad local"}
 ];
 
+console.log("📸 Ruta de imágenes de Vuelta de la Lucha:", base + "Vueltalucha/");
+
 var markerVuelta = L.marker([3.9755933, -74.4796517], { icon: iconoVuelta })
     .addTo(map)
     .bindPopup(crearPopupCarrusel(imagenesVuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
@@ -457,7 +475,9 @@ var imagenFrijol = {
     ruta: base + "Frijolchocho/P2Frijolchocho1.JPG"
 };
 
-var markerFrijol = L.marker([3.9755467, -74.47968], { icon: iconoFrijol })
+console.log("📸 Ruta de imagen de Frijol Chocho:", base + "Frijolchocho/");
+
+var markerFrijol = L.marker([3.9755925, -74.47965], { icon: iconoFrijol })
     .addTo(map)
     .bindPopup(crearPopupSimple(imagenFrijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
 
@@ -555,12 +575,30 @@ fetch(vectorBase + "rios_cabrera.geojson")
 .catch(err => console.error("Error cargando ríos:", err));
 
 // ================= ZOOM A LOS PUNTOS =================
-// Crear un grupo de marcadores para ajustar el zoom
 var grupoPuntos = L.featureGroup([markerVuelta, markerFrijol]).addTo(map);
 map.fitBounds(grupoPuntos.getBounds(), { padding: [50, 50] });
 
 console.log("✅ Mapa completamente cargado");
 console.log("📍 Los dos puntos de interés están visibles en el mapa");
+console.log("📸 Si las imágenes no cargan, verifica que la carpeta P16junio existe en:");
+console.log("   " + base);
+
+// Verificar si las imágenes existen (solo para depuración)
+function verificarImagen(url) {
+    fetch(url, { method: 'HEAD' })
+        .then(res => {
+            if (res.ok) {
+                console.log("✅ Imagen encontrada:", url);
+            } else {
+                console.log("❌ Imagen NO encontrada:", url);
+            }
+        })
+        .catch(err => console.log("❌ Error verificando imagen:", url, err));
+}
+
+// Verificar algunas imágenes
+verificarImagen(base + "Vueltalucha/P1Vueltalucha1.JPG");
+verificarImagen(base + "Frijolchocho/P2Frijolchocho1.JPG");
 
 </script>
 
