@@ -353,7 +353,7 @@ body {
         <p>
             <strong>Cabrera</strong> es un municipio colombiano ubicado en el departamento de Cundinamarca, 
             conocido por su belleza natural, paisajes montañosos y su rica cultura campesina. Este mapa 
-            interactivo te permite explorar los ríos y las veredas del municipio.
+            interactivo te permite explorar los ríos y las veredas del municipio, además de puntos de interés como "La Vuelta de la Lucha".
         </p>
         <p>
             Puedes activar o desactivar las capas de veredas y ríos usando el control en la esquina superior derecha del mapa. 
@@ -364,6 +364,7 @@ body {
             <div class="dato"><strong>🗺️ Capas disponibles:</strong> Veredas y Ríos</div>
             <div class="dato"><strong>💧 Ríos:</strong> Capa azul con nombres</div>
             <div class="dato"><strong>🏡 Veredas:</strong> Polígonos con nombres al pasar el mouse</div>
+            <div class="dato"><strong>📍 Nuevo punto:</strong> La Vuelta de la Lucha</div>
         </div>
     </div>
     
@@ -418,6 +419,75 @@ var googleHibrido = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z=
 var osmCalles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap'
 });
+
+// ================= FUNCIONES CARRUSEL =================
+function crearPopup(imagenes, id, titulo) {
+    let html = `
+    <div class="popup">
+        <h4>${titulo}</h4>
+        <img id="img_${id}" src="${imagenes[0].ruta}">
+        <p id="desc_${id}">${imagenes[0].desc}</p>
+        <div>
+            <button onclick="prev('${id}')">◀ Anterior</button>
+            <button onclick="next('${id}')">Siguiente ▶</button>
+        </div>
+        <p id="count_${id}" style="margin-top: 8px; font-size: 12px;">1 / ${imagenes.length}</p>
+    </div>
+    `;
+    window[`imgs_${id}`] = imagenes;
+    window[`i_${id}`] = 0;
+    return html;
+}
+
+function update(id) {
+    let i = window[`i_${id}`];
+    let imgs = window[`imgs_${id}`];
+    document.getElementById(`img_${id}`).src = imgs[i].ruta;
+    document.getElementById(`desc_${id}`).innerText = imgs[i].desc;
+    document.getElementById(`count_${id}`).innerText = (i+1) + " / " + imgs.length;
+}
+
+function next(id) {
+    window[`i_${id}`] = (window[`i_${id}`] + 1) % window[`imgs_${id}`].length;
+    update(id);
+}
+
+function prev(id) {
+    window[`i_${id}`] = (window[`i_${id}`] - 1 + window[`imgs_${id}`].length) % window[`imgs_${id}`].length;
+    update(id);
+}
+
+// ================= BASE DE IMÁGENES =================
+const base = "https://arnold9507.github.io/Mapa_interactivo_Cabrera/documentos_interactivos/";
+
+// ================= ICONOS PERSONALIZADOS =================
+function crearIcono(color, nombre) {
+    return L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div style="background-color: ${color}; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: bold; color: white; font-size: 18px; font-family: Arial;">
+                    ${nombre}
+                </div>`,
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -18]
+    });
+}
+
+// ================= NUEVO PUNTO: VUELTA DE LA LUCHA =================
+// Coordenadas: 3°58'32.136''N 74°28'46.746''W
+// Convertidas a decimal: 3.9755933, -74.4796517
+var iconoVueltaLucha = crearIcono('#8e44ad', '🏔️');
+
+// Imágenes de la carpeta P16junio/Vueltalucha/
+var imgs_vuelta = [
+    {ruta: base + "P16junio/Vueltalucha/P1Vueltalucha1.JPG", desc: "Vista panorámica de La Vuelta de la Lucha"},
+    {ruta: base + "P16junio/Vueltalucha/P1Vueltalucha2.JPG", desc: "Paisaje característico de la zona"},
+    {ruta: base + "P16junio/Vueltalucha/P1Vueltalucha3.JPG", desc: "Vegetación y biodiversidad local"}
+];
+
+L.marker([3.9755933, -74.4796517], { icon: iconoVueltaLucha })
+.addTo(map)
+.bindPopup(crearPopup(imgs_vuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
 
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
@@ -532,6 +602,8 @@ fetch(vectorBase + "rios_cabrera.geojson")
 });
 
 console.log("✅ Mapa interactivo cargado correctamente");
+console.log("📍 Nuevo punto agregado: La Vuelta de la Lucha en coordenadas 3.9755933, -74.4796517");
+console.log("📸 Imágenes: P1Vueltalucha1.JPG, P1Vueltalucha2.JPG, P1Vueltalucha3.JPG");
 console.log("💡 Las veredas de Cabrera se muestran con tooltips que aparecen al pasar el mouse");
 console.log("💧 Los ríos de Cabrera se muestran en color AZUL (archivo: rios_cabrera.geojson)");
 
