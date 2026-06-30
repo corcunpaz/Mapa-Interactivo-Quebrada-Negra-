@@ -213,34 +213,6 @@ body {
     background: #1a5f7a;
 }
 
-/* ================= ESTILOS PARA VIDEO EN POPUP ================= */
-.popup video {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 10px;
-    margin: 10px 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.popup .video-info {
-    font-size: 12px;
-    color: #666;
-    margin-top: 5px;
-}
-
-/* ================= ESTILOS PARA AUDIO EN POPUP ================= */
-.popup audio {
-    width: 100%;
-    margin: 10px 0;
-    border-radius: 30px;
-}
-
-.popup .audio-info {
-    font-size: 12px;
-    color: #666;
-    margin-top: 5px;
-}
-
 /* ================= LEAFLET AJUSTES ================= */
 .leaflet-popup-content-wrapper {
     padding: 0 !important;
@@ -353,7 +325,7 @@ body {
         <p>
             <strong>Cabrera</strong> es un municipio colombiano ubicado en el departamento de Cundinamarca, 
             conocido por su belleza natural, paisajes montañosos y su rica cultura campesina. Este mapa 
-            interactivo te permite explorar los ríos y las veredas del municipio, además de puntos de interés como "La Vuelta de la Lucha" y "Frijol Chocho".
+            interactivo te permite explorar los ríos y las veredas del municipio, además de puntos de interés.
         </p>
         <p>
             Puedes activar o desactivar las capas de veredas y ríos usando el control en la esquina superior derecha del mapa. 
@@ -364,13 +336,13 @@ body {
             <div class="dato"><strong>🗺️ Capas disponibles:</strong> Veredas y Ríos</div>
             <div class="dato"><strong>💧 Ríos:</strong> Capa azul con nombres</div>
             <div class="dato"><strong>🏡 Veredas:</strong> Polígonos con nombres al pasar el mouse</div>
-            <div class="dato"><strong>📍 Puntos:</strong> La Vuelta de la Lucha y Frijol Chocho</div>
+            <div class="dato"><strong>📍 Puntos de interés:</strong> La Vuelta de la Lucha y Frijol Chocho</div>
         </div>
     </div>
     
     <!-- CONTENEDOR DEL MAPA -->
     <div class="mapa-wrapper">
-        <div class="label">🗺️ EXPLORA EL MAPA - Pasa el mouse sobre las veredas y ríos para ver sus nombres</div>
+        <div class="label">🗺️ EXPLORA EL MAPA - Haz clic en los marcadores para ver las imágenes</div>
         <div id="map"></div>
     </div>
     
@@ -391,7 +363,7 @@ body {
 <script>
 
 // ================= INICIALIZAR MAPA =================
-var map = L.map('map').setView([3.89052, -74.44461], 11);
+var map = L.map('map').setView([3.9756, -74.4797], 15);
 
 // ================= MAPAS BASE =================
 // Google Satelital (principal)
@@ -439,8 +411,7 @@ function crearPopup(imagenes, id, titulo) {
     return html;
 }
 
-// Función para popup con una sola imagen (sin carrusel)
-function crearPopupSimple(imagen, id, titulo, descripcion) {
+function crearPopupSimple(imagen, titulo, descripcion) {
     let html = `
     <div class="popup">
         <h4>${titulo}</h4>
@@ -487,7 +458,7 @@ function crearIcono(color, nombre) {
 
 // ================= PUNTO 1: VUELTA DE LA LUCHA =================
 // Coordenadas: 3°58'32.136''N 74°28'46.746''W
-// Convertidas a decimal: 3.9755933, -74.4796517
+// Decimal: 3.9755933, -74.4796517
 var iconoVueltaLucha = crearIcono('#8e44ad', '🏔️');
 
 var imgs_vuelta = [
@@ -502,7 +473,7 @@ L.marker([3.9755933, -74.4796517], { icon: iconoVueltaLucha })
 
 // ================= PUNTO 2: FRIJOL CHOCHO =================
 // Coordenadas: 3°58'32.133''N 74°28'46.740''W
-// Convertidas a decimal: 3.9755925, -74.47965
+// Decimal: 3.9755925, -74.47965
 var iconoFrijolChocho = crearIcono('#e67e22', '🌱');
 
 var img_frijol = {
@@ -511,7 +482,7 @@ var img_frijol = {
 
 L.marker([3.9755925, -74.47965], { icon: iconoFrijolChocho })
 .addTo(map)
-.bindPopup(crearPopupSimple(img_frijol, "frijol", "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
+.bindPopup(crearPopupSimple(img_frijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
 
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
@@ -527,7 +498,7 @@ var controlAgregado = false;
 // ================= GEOJSON - VEREDAS DE CABRERA =================
 const vectorBase = "https://arnold9507.github.io/Mapa_interactivo_Cabrera/vectorial/";
 
-// Cargar capa de veredas de Cabrera (borde negro, relleno transparente)
+// Cargar capa de veredas de Cabrera
 fetch(vectorBase + "cabrera_veredas.geojson")
 .then(res => res.json())
 .then(data => {
@@ -562,12 +533,11 @@ fetch(vectorBase + "cabrera_veredas.geojson")
 })
 .catch(err => console.log("Error cargando veredas de Cabrera:", err));
 
-// ================= RÍOS CABRERA (AZUL) =================
+// ================= RÍOS CABRERA =================
 fetch(vectorBase + "rios_cabrera.geojson")
 .then(res => res.json())
 .then(data => {
     console.log("✅ Archivo rios_cabrera.geojson cargado correctamente");
-    console.log("📊 Cantidad de elementos en la capa de ríos:", data.features ? data.features.length : 0);
     
     var capaRiosCabrera = L.geoJSON(data, {
         style: {
@@ -621,16 +591,12 @@ fetch(vectorBase + "rios_cabrera.geojson")
 })
 .catch(err => {
     console.error("❌ Error cargando rios_cabrera.geojson:", err);
-    console.warn("💡 Verifica que el archivo 'rios_cabrera.geojson' existe en la carpeta vectorial/");
 });
 
 console.log("✅ Mapa interactivo cargado correctamente");
-console.log("📍 Puntos agregados:");
-console.log("   - La Vuelta de la Lucha (3.9755933, -74.4796517)");
-console.log("   - Frijol Chocho (3.9755925, -74.47965)");
-console.log("📸 Imagen: P2Frijolchocho1.JPG en carpeta Frijolchocho/");
-console.log("💡 Las veredas de Cabrera se muestran con tooltips al pasar el mouse");
-console.log("💧 Los ríos de Cabrera se muestran en color AZUL");
+console.log("📍 Puntos de interés:");
+console.log("   🏔️ La Vuelta de la Lucha (3.9755933, -74.4796517)");
+console.log("   🌱 Frijol Chocho (3.9755925, -74.47965)");
 
 </script>
 
