@@ -465,25 +465,6 @@ var markerVuelta = L.marker([3.9755933, -74.4796517], { icon: iconoVuelta })
     .addTo(map)
     .bindPopup(crearPopupCarrusel(imagenesVuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
 
-// ================= PUNTO 2: FRIJOL CHOCHO =================
-// Coordenadas: 3°58'32.133''N 74°28'46.740''W
-// Decimal: 3.9755925, -74.47965
-var iconoFrijol = crearIcono('#e67e22', '🌱');
-
-var imagenFrijol = {
-    ruta: base + "Frijolchocho/P2Frijolchocho1.JPG"
-};
-
-console.log("📸 Ruta de imagen de Frijol Chocho:", base + "Frijolchocho/");
-
-var markerFrijol = L.marker([3.9755925, -74.47965], { icon: iconoFrijol })
-    .addTo(map)
-    .bindPopup(crearPopupSimple(imagenFrijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
-
-console.log("✅ Marcadores agregados:");
-console.log("  🏔️ La Vuelta de la Lucha en:", markerVuelta.getLatLng());
-console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
-
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
     "🛰️ Google Satélite": googleSatelite,
