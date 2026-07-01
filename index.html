@@ -331,6 +331,7 @@ body {
         <div class="datos">
             <div class="dato"><strong>🗺️ Capas:</strong> Veredas y Ríos</div>
             <div class="dato"><strong>📍 Punto 1:</strong> La Vuelta de la Lucha (3 imágenes)</div>
+            <div class="dato"><strong>📍 Punto 2:</strong> Frijol Chocho (1 imagen)</div>
         </div>
     </div>
     
@@ -354,7 +355,8 @@ body {
 <script>
 
 // ================= INICIALIZAR MAPA =================
-var map = L.map('map').setView([3.9756, -74.4797], 16);
+// CAMBIO 1: Zoom inicial cambiado de 8 a 14 (más cercano)
+var map = L.map('map').setView([3.9756, -74.4797], 14);
 
 // ================= MAPAS BASE =================
 var googleSatelite = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
@@ -465,6 +467,45 @@ var markerVuelta = L.marker([3.9755933, -74.4796517], { icon: iconoVuelta })
     .addTo(map)
     .bindPopup(crearPopupCarrusel(imagenesVuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
 
+// ================= PUNTO 2: FRIJOL CHOCHO =================
+// Coordenadas: 3°58'32.133''N 74°28'46.740''W
+// Decimal: 3.9755925, -74.47965
+var iconoFrijol = crearIcono('#e67e22', '🌱');
+
+var imagenFrijol = {
+    ruta: base + "Frijolchocho/P2Frijolchocho1.JPG"
+};
+
+console.log("📸 Ruta de imagen de Frijol Chocho:", base + "Frijolchocho/");
+
+var markerFrijol = L.marker([3.976, -74.475], { icon: iconoFrijol })
+    .addTo(map)
+    .bindPopup(crearPopupSimple(imagenFrijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
+
+
+// ================= PUNTO 3: ANTIGUO TELECOM =================
+// Coordenadas: 3°58'32.136''N 74°28'46.746''W
+// Decimal: 3.9755933, -74.4796517
+var iconoTele = crearIcono('#8e44ad', '📞');
+
+var imagenesTele = [
+    {ruta: base + "Antiguotelecom/P5Antiguatelecom1.JPG", desc: "Telecom 1"},
+    {ruta: base + "Antiguotelecom/P5Antiguatelecom2.JPG", desc: "telecom 2"},
+];
+
+console.log("📸 Ruta de imágenes de Telecom:", base + "Antiguotelecom/");
+
+var markerTele = L.marker([3.9725933, -74.4726517], { icon: iconoTele })
+    .addTo(map)
+    .bindPopup(crearPopupCarrusel(imagenesTele, "telecom", "📞 Antiguo telecom"));
+    
+// ================= Añadir puntos =================
+
+console.log("✅ Marcadores agregados:");
+console.log("  🏔️ La Vuelta de la Lucha en:", markerVuelta.getLatLng());
+console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
+console.log("  📞 Antiguo telecom en:", markerTele.getLatLng());
+
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
     "🛰️ Google Satélite": googleSatelite,
@@ -474,14 +515,21 @@ var baseMaps = {
 };
 
 var overlayMaps = {};
-var controlAgregado = false;
 
 // ================= GEOJSON - VEREDAS =================
-const vectorBase = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/vectorial/";
+const vectorBase = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/Vectorial/";
+
+// CAMBIO 2: Asegurar que el control de capas se muestre correctamente
+// Crear el control de capas ANTES de cargar los datos
+var controlLayers = L.control.layers(baseMaps, {}, {
+    collapsed: false,
+    position: 'topright'
+}).addTo(map);
 
 fetch(vectorBase + "cabrera_veredas.geojson")
 .then(res => res.json())
 .then(data => {
+    console.log("✅ Veredas cargadas correctamente");
     var capaVeredas = L.geoJSON(data, {
         style: {
             color: "black",
@@ -501,17 +549,10 @@ fetch(vectorBase + "cabrera_veredas.geojson")
         }
     }).addTo(map);
     
-    overlayMaps["🗺️ Veredas de Cabrera"] = capaVeredas;
-    
-    if (controlAgregado === false && Object.keys(overlayMaps).length >= 1) {
-        L.control.layers(baseMaps, overlayMaps, {
-            collapsed: false,
-            position: 'topright'
-        }).addTo(map);
-        controlAgregado = true;
-    }
+    // Añadir la capa al control
+    controlLayers.addOverlay(capaVeredas, "🗺️ Veredas de Cabrera");
 })
-.catch(err => console.log("Error cargando veredas:", err));
+.catch(err => console.error("Error cargando veredas:", err));
 
 // ================= GEOJSON - RÍOS =================
 fetch(vectorBase + "rios_cabrera.geojson")
@@ -542,43 +583,23 @@ fetch(vectorBase + "rios_cabrera.geojson")
         }
     }).addTo(map);
     
-    overlayMaps["💧 Ríos de Cabrera"] = capaRios;
-    
-    if (controlAgregado === false && Object.keys(overlayMaps).length >= 1) {
-        L.control.layers(baseMaps, overlayMaps, {
-            collapsed: false,
-            position: 'topright'
-        }).addTo(map);
-        controlAgregado = true;
-    }
+    // Añadir la capa al control
+    controlLayers.addOverlay(capaRios, "💧 Ríos de Cabrera");
 })
 .catch(err => console.error("Error cargando ríos:", err));
 
-// ================= ZOOM A LOS PUNTOS =================
-var grupoPuntos = L.featureGroup([markerVuelta, markerFrijol]).addTo(map);
-map.fitBounds(grupoPuntos.getBounds(), { padding: [50, 50] });
+// CAMBIO 3: Eliminar el zoom a los puntos para mantener el zoom inicial en 14
+// Ya no se usa fitBounds para que el zoom se mantenga en 14
 
-console.log("✅ Mapa completamente cargado");
-console.log("📍 Los dos puntos de interés están visibles en el mapa");
-console.log("📸 Si las imágenes no cargan, verifica que la carpeta P16junio existe en:");
-console.log("   " + base);
+// CAMBIO 4: Asegurar que el control de capas sea visible desde el inicio
+console.log("✅ Control de capas agregado correctamente");
+console.log("📌 Para ver las capas, usa el control en la esquina superior derecha");
 
-// Verificar si las imágenes existen (solo para depuración)
-function verificarImagen(url) {
-    fetch(url, { method: 'HEAD' })
-        .then(res => {
-            if (res.ok) {
-                console.log("✅ Imagen encontrada:", url);
-            } else {
-                console.log("❌ Imagen NO encontrada:", url);
-            }
-        })
-        .catch(err => console.log("❌ Error verificando imagen:", url, err));
-}
-
-// Verificar algunas imágenes
-verificarImagen(base + "Vueltalucha/P1Vueltalucha1.JPG");
-verificarImagen(base + "Frijolchocho/P2Frijolchocho1.JPG");
+// CAMBIO 5: Mensaje de ayuda en consola
+console.log("💡 TIPS:");
+console.log("  - Usa el control en la esquina superior derecha para activar/desactivar capas");
+console.log("  - El zoom inicial es 14 (más cercano)");
+console.log("  - Haz clic en los marcadores para ver las imágenes");
 
 </script>
 
