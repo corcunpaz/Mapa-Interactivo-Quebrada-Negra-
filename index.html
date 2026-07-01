@@ -301,18 +301,19 @@ body {
 <div class="contenedor">
     
     <div class="logo-container">
-        <img src="https://github.com/corcunpaz/Mapa-Interactivo-Quebrada-Negra-/blob/main/LogoCorcunoaz.png" 
+        <img src="https://arnold9507.github.io/Mapa_interactivo_Cabrera/documentos_interactivos/LogoZRC.png" alt="Logo Zona de Reserva Campesina">
+    </div>
     
     <div class="header">
         <h1>
-           🌎 Cabrera, Cundinamarca
-            <span>📍 Mapa Interactivo  </span>
+            🌄 Cabrera, Cundinamarca
+            <span>📍 Guía Interactiva</span>
         </h1>
         <div class="subtitulo">
-            Río Sumapaz y Quebrada Negra
+            Descubre el municipio de Cabrera
         </div>
         <div class="ubicacion">
-            🗺️ Ubicado en la provincia del Sumapaz | 
+            🗺️ Ubicado en la provincia del Sumapaz | 🌡️ Clima templado | 🏔️ Altitud: 1,300 msnm
         </div>
     </div>
     
@@ -331,7 +332,6 @@ body {
             <div class="dato"><strong>🗺️ Capas:</strong> Veredas y Ríos</div>
             <div class="dato"><strong>📍 Punto 1:</strong> La Vuelta de la Lucha (3 imágenes)</div>
             <div class="dato"><strong>📍 Punto 2:</strong> Frijol Chocho (1 imagen)</div>
-            <div class="dato"><strong>📍 Punto 3:</strong> La Granja (1 imagen)</div>
         </div>
     </div>
     
@@ -483,26 +483,28 @@ var markerFrijol = L.marker([3.976, -74.475], { icon: iconoFrijol })
     .bindPopup(crearPopupSimple(imagenFrijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
 
 
-// ================= PUNTO 3: LA GRANJA =================
+// ================= PUNTO 3: ANTIGUO TELECOM =================
+// Coordenadas: 3°58'32.136''N 74°28'46.746''W
+// Decimal: 3.9755933, -74.4796517
+var iconoTele = crearIcono('#8e44ad', '📞');
 
-var iconoGranja = crearIcono('#8e44ad', '🐷');
-
-var imagenesGranja = [
-    {ruta: base + "Lagranja/P3Lagranja1.JPG.jpeg", desc: "La granja. Actualmente predio de la Universidad de Cundinamarca"},
+var imagenesTele = [
+    {ruta: base + "Antiguotelecom/P5Antiguatelecom1.JPG", desc: "Telecom 1"},
+    {ruta: base + "Antiguotelecom/P5Antiguatelecom2.JPG", desc: "telecom 2"},
 ];
 
-console.log("📸 Ruta de imágenes de Lagranja:", base + "Lagranja/");
+console.log("📸 Ruta de imágenes de Telecom:", base + "Antiguotelecom/");
 
-var markerGranja = L.marker([3.963937, -74.484462], { icon: iconoGranja })
+var markerTele = L.marker([3.9725933, -74.4726517], { icon: iconoTele })
     .addTo(map)
-    .bindPopup(crearPopupCarrusel(imagenesGranja, "La granja", " 🐷 La Granja "));
+    .bindPopup(crearPopupCarrusel(imagenesTele, "telecom", "📞 Antiguo telecom"));
     
 // ================= Añadir puntos =================
 
 console.log("✅ Marcadores agregados:");
 console.log("  🏔️ La Vuelta de la Lucha en:", markerVuelta.getLatLng());
 console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
-console.log("   🐷 La Granja en:", markerGranja.getLatLng());
+console.log("  📞 Antiguo telecom en:", markerTele.getLatLng());
 
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
