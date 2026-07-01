@@ -452,12 +452,12 @@ function crearIcono(color, emoji) {
 // ================= PUNTO 1: VUELTA DE LA LUCHA =================
 // Coordenadas: 3°58'32.136''N 74°28'46.746''W
 // Decimal: 3.9755933, -74.4796517
-var iconoVuelta = crearIcono('#8e44ad', '🏔️');
+var iconoVuelta = crearIcono('#8e44ad', '📖');
 
 var imagenesVuelta = [
     {ruta: base + "Vueltalucha/P1Vueltalucha1.JPG", desc: "Vista panorámica de La Vuelta de la Lucha"},
-    {ruta: base + "Vueltalucha/P1Vueltalucha2.JPG", desc: "Paisaje característico de la zona"},
-    {ruta: base + "Vueltalucha/P1Vueltalucha3.JPG", desc: "Vegetación y biodiversidad local"}
+    {ruta: base + "Vueltalucha/P1Vueltalucha2.JPG", desc: "Panorámica Vuelta de la Lucha"},
+    {ruta: base + "Vueltalucha/P1Vueltalucha3.JPG", desc: "Casco Urbano visto desde la Vuelata de la lucha"}
 ];
 
 console.log("📸 Ruta de imágenes de Vuelta de la Lucha:", base + "Vueltalucha/");
@@ -501,7 +501,7 @@ var markerTele = L.marker([3.9725933, -74.4726517], { icon: iconoTele })
 // ================= Añadir puntos =================
 
 console.log("✅ Marcadores agregados:");
-console.log("  🏔️ La Vuelta de la Lucha en:", markerVuelta.getLatLng());
+console.log("  📖 La Vuelta de la Lucha en:", markerVuelta.getLatLng());
 console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
 console.log("  📞 Antiguo telecom en:", markerTele.getLatLng());
 
