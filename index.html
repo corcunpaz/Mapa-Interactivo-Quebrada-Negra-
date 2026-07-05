@@ -482,28 +482,27 @@ var markerFrijol = L.marker([3.969842, -74.4799762], { icon: iconoFrijol })
     .bindPopup(crearPopupSimple(imagenFrijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
 
 
-// ================= PUNTO 3: ANTIGUO TELECOM =================
+// ================= PUNTO 3: LA GRANJA =================
 // Coordenadas: 3°58'32.136''N 74°28'46.746''W
-// Decimal: 3.9755933, -74.4796517
-var iconoTele = crearIcono('#8e44ad', '📞');
+// Decimal: 3.963937, -74.484462
+var iconoGranja = crearIcono('#8e44ad', '🐖');
 
-var imagenesTele = [
-    {ruta: base + "Antiguotelecom/P5Antiguatelecom1.JPG", desc: "Telecom 1"},
-    {ruta: base + "Antiguotelecom/P5Antiguatelecom2.JPG", desc: "telecom 2"},
+var imagenesGranja = [
+    {ruta: base + "Lagranja/P3Lagranja1.JPG.jpeg", desc: "La granja. Hoy predios de la Universidad de Cundinamarca."},
 ];
 
-console.log("📸 Ruta de imágenes de Telecom:", base + "Antiguotelecom/");
+console.log("📸 Ruta de imágenes de Lagranja:", base + "Lagranja/");
 
-var markerTele = L.marker([3.9725933, -74.4726517], { icon: iconoTele })
+var markerTele = L.marker([3.963937, -74.484462], { icon: iconoGranja })
     .addTo(map)
-    .bindPopup(crearPopupCarrusel(imagenesTele, "telecom", "📞 Antiguo telecom"));
+    .bindPopup(crearPopupCarrusel(imagenesGranja, "La Granja", "🐖 La Granja "));
     
 // ================= Añadir puntos =================
 
 console.log("✅ Marcadores agregados:");
 console.log("  📖 La Vuelta de la Lucha en:", markerVuelta.getLatLng());
 console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
-console.log("  📞 Antiguo telecom en:", markerTele.getLatLng());
+console.log("  🐖 La granja en:", markerTele.getLatLng());
 
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
