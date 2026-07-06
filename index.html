@@ -356,7 +356,6 @@ body {
 <script>
 
 // ================= INICIALIZAR MAPA =================
-// CAMBIO 1: Zoom inicial cambiado de 8 a 14 (más cercano)
 var map = L.map('map').setView([3.9756, -74.4797], 14);
 
 // ================= MAPAS BASE =================
@@ -435,7 +434,6 @@ function prev(id) {
 }
 
 // ================= BASE DE IMÁGENES =================
-// Usando la ruta correcta para las imágenes
 const base = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/P16junio/";
 
 // ================= ICONOS PERSONALIZADOS =================
@@ -452,78 +450,59 @@ function crearIcono(color, emoji) {
 }
 
 // ================= PUNTO 1: VUELTA DE LA LUCHA =================
-// Coordenadas: 3°58'32.136''N 74°28'46.746''W
-// Decimal: 3.9755933, -74.4796517
 var iconoVuelta = crearIcono('#8e44ad', '📖');
 
 var imagenesVuelta = [
     {ruta: base + "Vueltalucha/P1Vueltalucha1.JPG", desc: "Vista panorámica de La Vuelta de la Lucha"},
     {ruta: base + "Vueltalucha/P1Vueltalucha2.JPG", desc: "Panorámica Vuelta de la Lucha"},
-    {ruta: base + "Vueltalucha/P1Vueltalucha3.JPG", desc: "Casco Urbano visto desde la Vuelata de la lucha"}
+    {ruta: base + "Vueltalucha/P1Vueltalucha3.JPG", desc: "Casco Urbano visto desde la Vuelta de la lucha"}
 ];
-
-console.log("📸 Ruta de imágenes de Vuelta de la Lucha:", base + "Vueltalucha/");
 
 var markerVuelta = L.marker([3.9755933, -74.4796517], { icon: iconoVuelta })
     .addTo(map)
     .bindPopup(crearPopupCarrusel(imagenesVuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
 
 // ================= PUNTO 2: FRIJOL CHOCHO =================
-// Coordenadas: 3°58'32.133''N 74°28'46.740''W
-// Decimal: 3.9755925, -74.47965
 var iconoFrijol = crearIcono('#e67e22', '🌱');
 
 var imagenFrijol = {
     ruta: base + "Frijolchocho/P2Frijolchocho1.JPG"
 };
 
-console.log("📸 Ruta de imagen de Frijol Chocho:", base + "Frijolchocho/");
-
 var markerFrijol = L.marker([3.969842, -74.4799762], { icon: iconoFrijol })
     .addTo(map)
     .bindPopup(crearPopupSimple(imagenFrijol, "🌱 Frijol Chocho", "Semilla tradicional de frijol chocho en la Zona de Reserva Campesina de Cabrera"));
 
-
 // ================= PUNTO 3: LA GRANJA =================
-// Coordenadas: 3°58'32.136''N 74°28'46.746''W
-// Decimal: 3.963937, -74.484462
 var iconoGranja = crearIcono('#8e44ad', '🐖');
 
 var imagenesGranja = [
-    {ruta: base + "LaGranja/P3Lagranja1.jpg", desc: "La granja. Hoy predios de la Universidad de Cundinamarca."},
+    {ruta: base + "Lagranja/P3Lagranja1.jpg", desc: "La granja. Hoy predios de la Universidad de Cundinamarca."},
 ];
 
-console.log("📸 Ruta de imágenes de Lagranja:", base + "Lagranja/");
-
-var markerTele = L.marker([3.963937, -74.484462], { icon: iconoGranja })
+var markerGranja = L.marker([3.963937, -74.484462], { icon: iconoGranja })
     .addTo(map)
-    .bindPopup(crearPopupCarrusel(imagenesGranja, "La Granja", "🐖 La Granja "));
-
+    .bindPopup(crearPopupCarrusel(imagenesGranja, "granja", "🐖 La Granja"));
 
 // ================= PUNTO 4: LA LAJITA =================
-// Coordenadas: 3°58'32.136''N 74°28'46.746''W
-// Decimal: 3.94796, -74.490332
 var iconoLajita = crearIcono('#8e44ad', '⛰');
 
 var imagenesLajita = [
     {ruta: base + "Lalajita/P4Lalajita1.JPG", desc: "Puente la Lajita"},
     {ruta: base + "Lalajita/P4Lalajita2.JPG", desc: "Paso la Lajita"},
-    {ruta: base + "Lalajita/P4Lalajita3.JPG", desc: "Cascada la Lajita"}
+    {ruta: base + "Lalajita/P4Lalajita3.JPG", desc: "Cascada la Lajita"},
     {ruta: base + "Lalajita/P4Lalajita4.JPG", desc: "La lajita"}
 ];
-
-console.log("📸 Ruta de imágenes de La Lajita:", base + "Lalajita/");
 
 var markerLajita = L.marker([3.94796, -74.490332], { icon: iconoLajita })
     .addTo(map)
     .bindPopup(crearPopupCarrusel(imagenesLajita, "lajita", "⛰ La Lajita"));
     
-// ================= Añadir puntos =================
-
+// ================= LOG DE VERIFICACIÓN =================
 console.log("✅ Marcadores agregados:");
 console.log("  📖 La Vuelta de la Lucha en:", markerVuelta.getLatLng());
 console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
-console.log("  🐖 La granja en:", markerGranja.getLatLng());
+console.log("  🐖 La Granja en:", markerGranja.getLatLng());
 console.log("  ⛰ La Lajita en:", markerLajita.getLatLng());
 
 // ================= CAPAS DEL MAPA =================
@@ -539,8 +518,6 @@ var overlayMaps = {};
 // ================= GEOJSON - VEREDAS =================
 const vectorBase = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/Vectorial/";
 
-// CAMBIO 2: Asegurar que el control de capas se muestre correctamente
-// Crear el control de capas ANTES de cargar los datos
 var controlLayers = L.control.layers(baseMaps, {}, {
     collapsed: false,
     position: 'topright'
@@ -569,7 +546,6 @@ fetch(vectorBase + "cabrera_veredas.geojson")
         }
     }).addTo(map);
     
-    // Añadir la capa al control
     controlLayers.addOverlay(capaVeredas, "🗺️ Veredas de Cabrera");
 })
 .catch(err => console.error("Error cargando veredas:", err));
@@ -603,22 +579,13 @@ fetch(vectorBase + "rios_cabrera.geojson")
         }
     }).addTo(map);
     
-    // Añadir la capa al control
     controlLayers.addOverlay(capaRios, "💧 Ríos de Cabrera");
 })
 .catch(err => console.error("Error cargando ríos:", err));
 
-// CAMBIO 3: Eliminar el zoom a los puntos para mantener el zoom inicial en 14
-// Ya no se usa fitBounds para que el zoom se mantenga en 14
-
-// CAMBIO 4: Asegurar que el control de capas sea visible desde el inicio
 console.log("✅ Control de capas agregado correctamente");
-console.log("📌 Para ver las capas, usa el control en la esquina superior derecha");
-
-// CAMBIO 5: Mensaje de ayuda en consola
 console.log("💡 TIPS:");
 console.log("  - Usa el control en la esquina superior derecha para activar/desactivar capas");
-console.log("  - El zoom inicial es 14 (más cercano)");
 console.log("  - Haz clic en los marcadores para ver las imágenes");
 
 </script>
