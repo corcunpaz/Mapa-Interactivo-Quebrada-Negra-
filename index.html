@@ -332,6 +332,7 @@ body {
             <div class="dato"><strong>📍 Punto 1:</strong> La Vuelta de la Lucha </div>
             <div class="dato"><strong>📍 Punto 2:</strong> Frijol Chocho </div>
             <div class="dato"><strong>📍 Punto 3:</strong> La Granja </div>
+            <div class="dato"><strong>📍 Punto 4:</strong> La Lajita </div>
         </div>
     </div>
     
@@ -505,23 +506,28 @@ var markerTele = L.marker([3.963937, -74.484462], { icon: iconoGranja })
 var iconoLajita = crearIcono('#8e44ad', '⛰');
 
 var imagenesLajita = [
-    {ruta: base + "Vueltalucha/P1Vueltalucha1.JPG", desc: "Vista panorámica de La Vuelta de la Lucha"},
-    {ruta: base + "Vueltalucha/P1Vueltalucha2.JPG", desc: "Panorámica Vuelta de la Lucha"},
-    {ruta: base + "Vueltalucha/P1Vueltalucha3.JPG", desc: "Casco Urbano visto desde la Vuelata de la lucha"}
+    {ruta: base + "Lalajita/P4Lalajita1.JPG", desc: "Puente la Lajita"},
+    {ruta: base + "Lalajita/P4Lalajita2.JPG", desc: "Paso la Lajita"},
+    {ruta: base + "Lalajita/P4Lalajita3.JPG", desc: "Cascada la Lajita"}
+    {ruta: base + "Lalajita/P4Lalajita4.JPG", desc: "La lajita"}
 ];
 
-console.log("📸 Ruta de imágenes de Vuelta de la Lucha:", base + "Vueltalucha/");
+    var videosLajita = [
+    {ruta: base + "Lalajita/P4LalajitaV1.mp4", desc: "La lajita"},
 
-var markerVuelta = L.marker([3.9755933, -74.4796517], { icon: iconoVuelta })
+console.log("📸 Ruta de imágenes de La Lajita:", base + "Lalajita/");
+
+var markerLajita = L.marker([3.94796, -74.490332], { icon: iconoLajita })
     .addTo(map)
-    .bindPopup(crearPopupCarrusel(imagenesVuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
+    .bindPopup(crearPopupCarrusel(imagenesLajita, "lajita", "⛰ La Lajita"));
     
 // ================= Añadir puntos =================
 
 console.log("✅ Marcadores agregados:");
 console.log("  📖 La Vuelta de la Lucha en:", markerVuelta.getLatLng());
 console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
-console.log("  🐖 La granja en:", markerTele.getLatLng());
+console.log("  🐖 La granja en:", markerGranja.getLatLng());
+console.log("  ⛰ La Lajita en:", markerLajita.getLatLng());
 
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
