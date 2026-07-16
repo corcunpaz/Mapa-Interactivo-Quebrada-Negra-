@@ -36,10 +36,11 @@ body {
     top: 20px;
     left: 20px;
     z-index: 10;
-    background: transparent;
+    background: rgba(255,255,255,0.9);
     border-radius: 12px;
-    padding: 0;
+    padding: 8px 12px;
     transition: transform 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .logo-container:hover {
@@ -47,7 +48,7 @@ body {
 }
 
 .logo-container img {
-    max-height: 120px;
+    max-height: 80px;
     width: auto;
     display: block;
 }
@@ -184,10 +185,26 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
+.popup video {
+    width: 100%;
+    max-width: 400px;
+    max-height: 250px;
+    border-radius: 10px;
+    margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    background: #000;
+}
+
 .popup p {
     margin: 8px 0;
     font-size: 14px;
     color: #555;
+}
+
+.popup .media-info {
+    font-size: 12px;
+    color: #888;
+    margin-top: 5px;
 }
 
 .popup button {
@@ -204,17 +221,6 @@ body {
 
 .popup button:hover {
     background: #1a5f7a;
-}
-
-.popup-error {
-    color: #e74c3c;
-    padding: 20px;
-    text-align: center;
-}
-
-.popup-error img {
-    max-width: 100px;
-    margin: 10px auto;
 }
 
 .leaflet-popup-content-wrapper {
@@ -266,10 +272,11 @@ body {
     .logo-container {
         top: 10px;
         left: 10px;
+        padding: 5px 10px;
     }
     
     .logo-container img {
-        max-height: 80px;
+        max-height: 60px;
     }
     
     .header h1 {
@@ -285,7 +292,7 @@ body {
     }
     
     .popup {
-        min-width: 250px;
+        min-width: 200px;
     }
     
     .vereda-tooltip {
@@ -301,7 +308,7 @@ body {
 <div class="contenedor">
     
     <div class="logo-container">
-        <img src="LogoCorcunpaz.png" alt="Logo Zona de Reserva Campesina">
+        <img src="LogoCorcunpaz.png" alt="Logo Zona de Reserva Campesina" onerror="this.style.display='none'">
     </div>
     
     <div class="header">
@@ -386,7 +393,7 @@ function crearPopupCarrusel(imagenes, id, titulo) {
     let html = `
     <div class="popup">
         <h4>${titulo}</h4>
-        <img id="img_${id}" src="${imagenes[0].ruta}" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada'">
+        <img id="img_${id}" src="${imagenes[0].ruta}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect width=%22400%22 height=%22250%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22sans-serif%22 font-size=%2218%22%3EImagen no disponible%3C/text%3E%3C/svg%3E'">
         <p id="desc_${id}">${imagenes[0].desc}</p>
         <div>
             <button onclick="prev('${id}')">◀ Anterior</button>
@@ -400,11 +407,31 @@ function crearPopupCarrusel(imagenes, id, titulo) {
     return html;
 }
 
+function crearPopupCarruselConVideo(imagenes, id, titulo) {
+    let html = `
+    <div class="popup">
+        <h4>${titulo}</h4>
+        <div id="media_${id}">
+            <img id="img_${id}" src="${imagenes[0].ruta}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect width=%22400%22 height=%22250%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22sans-serif%22 font-size=%2218%22%3EImagen no disponible%3C/text%3E%3C/svg%3E'">
+        </div>
+        <p id="desc_${id}">${imagenes[0].desc}</p>
+        <div>
+            <button onclick="prevMedia('${id}')">◀ Anterior</button>
+            <button onclick="nextMedia('${id}')">Siguiente ▶</button>
+        </div>
+        <p id="count_${id}" style="margin-top: 8px; font-size: 12px;">1 / ${imagenes.length}</p>
+    </div>
+    `;
+    window[`imgs_${id}`] = imagenes;
+    window[`i_${id}`] = 0;
+    return html;
+}
+
 function crearPopupSimple(imagen, titulo, descripcion) {
     let html = `
     <div class="popup">
         <h4>${titulo}</h4>
-        <img src="${imagen.ruta}" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada'">
+        <img src="${imagen.ruta}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect width=%22400%22 height=%22250%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22sans-serif%22 font-size=%2218%22%3EImagen no disponible%3C/text%3E%3C/svg%3E'">
         <p>${descripcion}</p>
     </div>
     `;
@@ -413,24 +440,92 @@ function crearPopupSimple(imagen, titulo, descripcion) {
 
 function update(id) {
     let i = window[`i_${id}`];
-    let imgs = window[`imgs_${id}`];
+    let items = window[`imgs_${id}`];
+    let mediaContainer = document.getElementById(`media_${id}`);
     let imgElement = document.getElementById(`img_${id}`);
-    imgElement.src = imgs[i].ruta;
-    imgElement.onerror = function() {
-        this.src = 'https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada';
-    };
-    document.getElementById(`desc_${id}`).innerText = imgs[i].desc;
-    document.getElementById(`count_${id}`).innerText = (i+1) + " / " + imgs.length;
+    let descElement = document.getElementById(`desc_${id}`);
+    let countElement = document.getElementById(`count_${id}`);
+    
+    if (!mediaContainer || !descElement || !countElement) return;
+    
+    let item = items[i];
+    
+    // Limpiar el contenedor
+    mediaContainer.innerHTML = '';
+    
+    if (item.tipo === 'video') {
+        // Crear elemento de video
+        let video = document.createElement('video');
+        video.width = '100%';
+        video.controls = true;
+        video.style.borderRadius = '10px';
+        video.style.maxHeight = '250px';
+        video.style.background = '#000';
+        video.style.margin = '10px 0';
+        
+        let source = document.createElement('source');
+        source.src = item.ruta;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        
+        let fallbackText = document.createTextNode('Tu navegador no soporta la reproducción de video.');
+        video.appendChild(fallbackText);
+        
+        mediaContainer.appendChild(video);
+    } else {
+        // Crear elemento de imagen
+        let img = document.createElement('img');
+        img.id = `img_${id}`;
+        img.src = item.ruta;
+        img.alt = item.desc;
+        img.style.width = '100%';
+        img.style.maxHeight = '250px';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '10px';
+        img.style.margin = '10px 0';
+        img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+        img.onerror = function() {
+            this.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect width=%22400%22 height=%22250%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22sans-serif%22 font-size=%2218%22%3EImagen no disponible%3C/text%3E%3C/svg%3E';
+        };
+        mediaContainer.appendChild(img);
+    }
+    
+    descElement.innerText = item.desc;
+    countElement.innerText = (i+1) + " / " + items.length;
 }
 
-function next(id) {
+function nextMedia(id) {
     window[`i_${id}`] = (window[`i_${id}`] + 1) % window[`imgs_${id}`].length;
     update(id);
 }
 
-function prev(id) {
+function prevMedia(id) {
     window[`i_${id}`] = (window[`i_${id}`] - 1 + window[`imgs_${id}`].length) % window[`imgs_${id}`].length;
     update(id);
+}
+
+function updateSimple(id) {
+    let i = window[`i_${id}`];
+    let imgs = window[`imgs_${id}`];
+    let imgElement = document.getElementById(`img_${id}`);
+    if (imgElement) {
+        imgElement.src = imgs[i].ruta;
+        imgElement.onerror = function() {
+            this.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect width=%22400%22 height=%22250%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22sans-serif%22 font-size=%2218%22%3EImagen no disponible%3C/text%3E%3C/svg%3E';
+        };
+        document.getElementById(`desc_${id}`).innerText = imgs[i].desc;
+        document.getElementById(`count_${id}`).innerText = (i+1) + " / " + imgs.length;
+    }
+}
+
+function next(id) {
+    window[`i_${id}`] = (window[`i_${id}`] + 1) % window[`imgs_${id}`].length;
+    updateSimple(id);
+}
+
+function prev(id) {
+    window[`i_${id}`] = (window[`i_${id}`] - 1 + window[`imgs_${id}`].length) % window[`imgs_${id}`].length;
+    updateSimple(id);
 }
 
 // ================= BASE DE IMÁGENES =================
@@ -477,49 +572,36 @@ var markerFrijol = L.marker([3.969842, -74.4799762], { icon: iconoFrijol })
 var iconoGranja = crearIcono('#8e44ad', '🐖');
 
 var imagenesGranja = [
-    {ruta: base + "P16junio/LaGranja/P3Lagranja1.jpg", desc: "La granja. Hoy predios de la Universidad de Cundinamarca."},
+    {ruta: base + "LaGranja/P3Lagranja1.jpg", desc: "La granja. Hoy predios de la Universidad de Cundinamarca."},
 ];
 
 var markerGranja = L.marker([3.963937, -74.484462], { icon: iconoGranja })
     .addTo(map)
     .bindPopup(crearPopupCarrusel(imagenesGranja, "granja", "🐖 La Granja"));
 
-// ================= PUNTO 4: LA LAJITA =================
-var iconoLajita = crearIcono('#8e44ad', '⛰');
+// ================= PUNTO 4: LA LAJITA (IMÁGENES + VIDEO) =================
+var iconoLajita = crearIcono('#e67e22', '⛰');
 
-var imagenesLajita = [
-    {ruta: base + "Lalajita/P4Lalajita1.JPG", desc: "Puente la Lajita"},
-    {ruta: base + "Lalajita/P4Lalajita2.JPG", desc: "Paso la Lajita"},
-    {ruta: base + "Lalajita/P4Lalajita3.JPG", desc: "Cascada la Lajita"},
-    {ruta: base + "Lalajita/P4Lalajita4.JPG", desc: "La lajita"}
+// Array con imágenes y video combinados
+var contenidoLajita = [
+    {ruta: base + "Lalajita/P4Lalajita1.JPG", desc: "Puente La Lajita", tipo: "imagen"},
+    {ruta: base + "Lalajita/P4Lalajita2.JPG", desc: "Paso La Lajita", tipo: "imagen"},
+    {ruta: base + "Lalajita/P4Lalajita3.JPG", desc: "Cascada La Lajita", tipo: "imagen"},
+    {ruta: base + "Lalajita/P4Lalajita4.JPG", desc: "Vista panorámica de La Lajita", tipo: "imagen"},
+    {ruta: base + "Lalajita/P4LalajitaV1.mp4", desc: "🎬 Video - Recorrido por La Lajita", tipo: "video"}
 ];
-
-// ================= PUNTO 4: LA LAJITA (SOLO VIDEO) =================
-var iconoLajita = crearIcono('#8e44ad', '⛰');
-
-function crearPopupVideo(id, titulo) {
-    return `
-    <div class="popup">
-        <h4>${titulo}</h4>
-        <video width="100%" controls style="border-radius: 8px; max-height: 250px;">
-            <source src="${base}Lalajita/P4LalajitaV1.mp4" type="video/mp4">
-            Tu navegador no soporta la reproducción de video.
-        </video>
-        <p style="font-size: 12px; color: #888; margin-top: 5px;">🎬 Video - La Lajita</p>
-    </div>
-    `;
-}
 
 var markerLajita = L.marker([3.94796, -74.490332], { icon: iconoLajita })
     .addTo(map)
-    .bindPopup(crearPopupVideo("lajita", "⛰ La Lajita"));
-    
+    .bindPopup(crearPopupCarruselConVideo(contenidoLajita, "lajita", "⛰ La Lajita"));
+
 // ================= LOG DE VERIFICACIÓN =================
 console.log("✅ Marcadores agregados:");
 console.log("  📖 La Vuelta de la Lucha en:", markerVuelta.getLatLng());
 console.log("  🌱 Frijol Chocho en:", markerFrijol.getLatLng());
 console.log("  🐖 La Granja en:", markerGranja.getLatLng());
 console.log("  ⛰ La Lajita en:", markerLajita.getLatLng());
+console.log("  📹 La Lajita contiene 4 imágenes y 1 video");
 
 // ================= CAPAS DEL MAPA =================
 var baseMaps = {
@@ -539,8 +621,12 @@ var controlLayers = L.control.layers(baseMaps, {}, {
     position: 'topright'
 }).addTo(map);
 
+// Cargar veredas
 fetch(vectorBase + "cabrera_veredas.geojson")
-.then(res => res.json())
+.then(res => {
+    if (!res.ok) throw new Error('Error al cargar veredas');
+    return res.json();
+})
 .then(data => {
     console.log("✅ Veredas cargadas correctamente");
     var capaVeredas = L.geoJSON(data, {
@@ -564,11 +650,14 @@ fetch(vectorBase + "cabrera_veredas.geojson")
     
     controlLayers.addOverlay(capaVeredas, "🗺️ Veredas de Cabrera");
 })
-.catch(err => console.error("Error cargando veredas:", err));
+.catch(err => console.error("❌ Error cargando veredas:", err));
 
-// ================= GEOJSON - RÍOS =================
+// Cargar ríos
 fetch(vectorBase + "rios_cabrera.geojson")
-.then(res => res.json())
+.then(res => {
+    if (!res.ok) throw new Error('Error al cargar ríos');
+    return res.json();
+})
 .then(data => {
     console.log("✅ Ríos cargados correctamente");
     
@@ -597,12 +686,13 @@ fetch(vectorBase + "rios_cabrera.geojson")
     
     controlLayers.addOverlay(capaRios, "💧 Ríos de Cabrera");
 })
-.catch(err => console.error("Error cargando ríos:", err));
+.catch(err => console.error("❌ Error cargando ríos:", err));
 
 console.log("✅ Control de capas agregado correctamente");
 console.log("💡 TIPS:");
 console.log("  - Usa el control en la esquina superior derecha para activar/desactivar capas");
 console.log("  - Haz clic en los marcadores para ver las imágenes");
+console.log("  - En La Lajita, navega entre 4 imágenes y 1 video");
 
 </script>
 
