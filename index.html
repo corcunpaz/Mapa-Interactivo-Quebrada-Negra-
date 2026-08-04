@@ -1,4 +1,3 @@
-HTML
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -35,6 +34,510 @@ body {
 .logo-container {
     position: absolute;
     top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: transparent;
+    border-radius: 12px;
+    padding: 0;
+    transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+    transform: scale(1.05);
+}
+
+.logo-container img {
+    max-height: 120px;
+    width: auto;
+    display: block;
+}
+
+.header {
+    background: linear-gradient(135deg, #2b8cbe 0%, #1a5f7a 100%);
+    color: white;
+    padding: 25px 35px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.header h1 span {
+    font-size: 0.8em;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.header .subtitulo {
+    font-size: 1.1em;
+    opacity: 0.95;
+}
+
+.header .ubicacion {
+    margin-top: 12px;
+    font-size: 0.9em;
+    opacity: 0.85;
+}
+
+.descripcion {
+    padding: 25px 35px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.descripcion h2 {
+    color: #2b8cbe;
+    margin-bottom: 12px;
+    font-size: 1.5em;
+}
+
+.descripcion p {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.descripcion .datos {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.descripcion .dato {
+    background: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.85em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.descripcion .dato strong {
+    color: #2b8cbe;
+}
+
+.mapa-wrapper {
+    padding: 20px 35px;
+    background: #e9ecef;
+}
+
+.mapa-wrapper .label {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+#map {
+    height: 500px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.footer {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px 35px;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+.footer a {
+    color: #2b8cbe;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.popup {
+    display: block;
+    text-align: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 12px;
+    min-width: 280px;
+}
+
+.popup h4 {
+    margin: 6px 0;
+    font-size: 18px;
+    color: #2b8cbe;
+}
+
+.popup img, .popup video {
+    width: 100%;
+    max-width: 400px;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.popup video {
+    background-color: #000;
+}
+
+.popup p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.popup button {
+    margin: 8px 5px;
+    padding: 5px 15px;
+    cursor: pointer;
+    background: #2b8cbe;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.popup button:hover {
+    background: #1a5f7a;
+}
+
+.leaflet-popup-content-wrapper {
+    padding: 0 !important;
+    border-radius: 14px;
+    max-width: 450px !important;
+}
+
+.leaflet-popup-content {
+    margin: 0 !important;
+    width: auto !important;
+}
+
+.leaflet-control-layers {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.vereda-tooltip {
+    background-color: rgba(0,0,0,0.75);
+    border: 2px solid #2b8cbe;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    white-space: nowrap;
+}
+
+.rio-tooltip {
+    background-color: rgba(0,102,204,0.85);
+    border: 1px solid #003366;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 10px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    body { padding: 10px; }
+    .logo-container { top: 10px; left: 10px; }
+    .logo-container img { max-height: 80px; }
+    .header h1 { font-size: 1.5em; }
+    .descripcion, .mapa-wrapper, .header, .footer { padding: 15px 20px; }
+    #map { height: 400px; }
+    .popup { min-width: 250px; }
+    .vereda-tooltip { font-size: 12px; padding: 4px 8px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+    
+    <div class="logo-container">
+        <img src="https://arnold9507.github.io/Mapa_interactivo_Cabrera/documentos_interactivos/LogoZRC.png" alt="Logo Zona de Reserva Campesina">
+    </div>
+    
+    <div class="header">
+        <h1>🌄 Cabrera, Cundinamarca <span>📍 Guía Interactiva</span></h1>
+        <div class="subtitulo">Descubre el municipio de Cabrera</div>
+        <div class="ubicacion">🗺️ Ubicado en la provincia del Sumapaz | 🌡️ Clima templado | 🏔️ Altitud: 1,300 msnm</div>
+    </div>
+    
+    <div class="descripcion">
+        <h2>📖 Sobre este mapa interactivo</h2>
+        <p>
+            <strong>Cabrera</strong> es un municipio colombiano ubicado en el departamento de Cundinamarca, conocido por su belleza natural, paisajes montañosos y su rica cultura campesina.
+        </p>
+        <p>
+            Puedes activar o desactivar las capas de veredas y ríos usando el control en la esquina superior derecha del mapa. Haz clic en los marcadores para explorar los territorios y la memoria local.
+        </p>
+        <div class="datos">
+            <div class="dato"><strong>🗺️ Capas:</strong> Veredas y Ríos</div>
+            <div class="dato"><strong>📍 Punto 1:</strong> La Vuelta de la Lucha (3 imágenes)</div>
+            <div class="dato"><strong>📍 Punto 2:</strong> Frijol Chocho (1 imagen)</div>
+            <div class="dato"><strong>📍 Punto 3:</strong> Antiguo Telecom (2 imágenes)</div>
+            <div class="dato"><strong>📍 Punto 4:</strong> La Lajita (4 imágenes, 1 video)</div>
+        </div>
+    </div>
+    
+    <div class="mapa-wrapper">
+        <div class="label">🗺️ EXPLORA EL MAPA - Haz clic en los marcadores coloridos</div>
+        <div id="map"></div>
+    </div>
+    
+    <div class="footer">
+        <p>📌 Mapa con capas de veredas y ríos del municipio de Cabrera</p>
+        <p>🗺️ Datos geográficos: OpenStreetMap, Esri, Google Maps</p>
+        <p>
+            <a href="mapa-solo.html" target="_blank" style="display: inline-block; background: #2b8cbe; color: white; padding: 8px 20px; border-radius: 25px; text-decoration: none; margin-top: 10px;">
+                🗺️ Ver mapa en pantalla completa
+            </a>
+        </p>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+// ================= INICIALIZAR MAPA =================
+var map = L.map('map').setView([3.9756, -74.4797], 14);
+
+// ================= MAPAS BASE =================
+var googleSatelite = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    attribution: '&copy; Google Maps',
+    maxZoom: 22,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+}).addTo(map);
+
+var googleCalles = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    attribution: '&copy; Google Maps',
+    maxZoom: 22,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+});
+
+var googleHibrido = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+    attribution: '&copy; Google Maps',
+    maxZoom: 22,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+});
+
+var osmCalles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+});
+
+
+// ================= FUNCIONES GLOBALES DE CARRUSEL =================
+window.crearPopupCarrusel = function(media, id, titulo) {
+    window[`media_${id}`] = media;
+    window[`i_${id}`] = 0;
+    
+    let firstMedia = media[0];
+    let isVideo = firstMedia.ruta.toLowerCase().endsWith('.mp4');
+    let mediaHtml = isVideo 
+        ? `<video src="${firstMedia.ruta}" controls></video>`
+        : `<img src="${firstMedia.ruta}" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada'">`;
+
+    return `
+    <div class="popup">
+        <h4>${titulo}</h4>
+        <div id="media_container_${id}">
+            ${mediaHtml}
+        </div>
+        <p id="desc_${id}">${firstMedia.desc}</p>
+        <div>
+            <button onclick="window.prev('${id}')">◀ Anterior</button>
+            <button onclick="window.next('${id}')">Siguiente ▶</button>
+        </div>
+        <p id="count_${id}" style="margin-top: 8px; font-size: 12px;">1 / ${media.length}</p>
+    </div>
+    `;
+};
+
+window.crearPopupSimple = function(imagen, titulo, descripcion) {
+    return `
+    <div class="popup">
+        <h4>${titulo}</h4>
+        <img src="${imagen.ruta}" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada'">
+        <p>${descripcion}</p>
+    </div>
+    `;
+};
+
+window.update = function(id) {
+    let i = window[`i_${id}`];
+    let media = window[`media_${id}`];
+    let container = document.getElementById(`media_container_${id}`);
+    let descElement = document.getElementById(`desc_${id}`);
+    let countElement = document.getElementById(`count_${id}`);
+    
+    if (container && descElement && countElement) {
+        let currentMedia = media[i];
+        let isVideo = currentMedia.ruta.toLowerCase().endsWith('.mp4');
+        
+        let mediaHtml = isVideo 
+            ? `<video src="${currentMedia.ruta}" controls autoplay></video>`
+            : `<img src="${currentMedia.ruta}" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=Imagen+no+encontrada'">`;
+            
+        container.innerHTML = mediaHtml;
+        descElement.innerText = currentMedia.desc;
+        countElement.innerText = (i + 1) + " / " + media.length;
+    }
+};
+
+window.next = function(id) {
+    window[`i_${id}`] = (window[`i_${id}`] + 1) % window[`media_${id}`].length;
+    window.update(id);
+};
+
+window.prev = function(id) {
+    window[`i_${id}`] = (window[`i_${id}`] - 1 + window[`media_${id}`].length) % window[`media_${id}`].length;
+    window.update(id);
+};
+
+
+// ================= RUTA BASE IMÁGENES =================
+const base = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/P16junio/";
+
+// ================= ICONOS PERSONALIZADOS =================
+function crearIcono(color, emoji) {
+    return L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div style="background-color: ${color}; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.5); font-size: 20px; line-height: 1;">
+                    ${emoji}
+                </div>`,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -20]
+    });
+}
+
+// ================= PUNTOS DE INTERÉS =================
+
+// PUNTO 1
+var iconoVuelta = crearIcono('#8e44ad', '🏔️');
+var imagenesVuelta = [
+    {ruta: base + "Vueltalucha/P1Vueltalucha1.JPG", desc: "Vista panorámica de La Vuelta de la Lucha"},
+    {ruta: base + "Vueltalucha/P1Vueltalucha2.JPG", desc: "Paisaje característico de la zona"},
+    {ruta: base + "Vueltalucha/P1Vueltalucha3.JPG", desc: "Vegetación y biodiversidad local"}
+];
+// ¡Coordenadas corregidas!
+L.marker([3.97558, -74.479672], { icon: iconoVuelta })
+    .addTo(map)
+    .bindPopup(crearPopupCarrusel(imagenesVuelta, "vuelta", "🏔️ La Vuelta de la Lucha"));
+
+// PUNTO 2
+var iconoFrijol = crearIcono('#e67e22', '🌱');
+var imagenFrijol = { ruta: base + "Frijolchocho/P2Frijolchocho1.JPG" };
+// ¡Coordenadas corregidas!
+L.marker([3.975525, -74.479547], { icon: iconoFrijol })
+    .addTo(map)
+    .bindPopup(crearPopupSimple(imagenFrijol, "🌱 Frijol Chocho", "Cultivo tradicional de frijol chocho en la región de Cabrera"));
+
+// PUNTO 3
+var iconoTele = crearIcono('#8e44ad', '📞');
+var imagenesTele = [
+    {ruta: base + "Antiguotelecom/P5Antiguatelecom1.JPG", desc: "Telecom 1"},
+    {ruta: base + "Antiguotelecom/P5Antiguatelecom2.JPG", desc: "Telecom 2"}
+];
+// ¡Coordenadas corregidas!
+L.marker([3.933853, -74.489443], { icon: iconoTele })
+    .addTo(map)
+    .bindPopup(crearPopupCarrusel(imagenesTele, "telecom", "📞 Antiguo Telecom"));
+
+// PUNTO 4: LA LAJITA
+var iconoLajita = crearIcono('#27ae60', '🏞️');
+var mediaLajita = [
+    {ruta: base + "Lalajita/P4Lalajita1.JPG", desc: "Fotografía 1 de La Lajita"},
+    {ruta: base + "Lalajita/P4Lalajita2.JPG", desc: "Fotografía 2 de La Lajita"},
+    {ruta: base + "Lalajita/P4Lalajita3.JPG", desc: "Fotografía 3 de La Lajita"},
+    {ruta: base + "Lalajita/P4Lalajita4.JPG", desc: "Fotografía 4 de La Lajita"},
+    {ruta: base + "Lalajita/P4LalajitaV1.mp4", desc: "Recorrido en video por La Lajita"}
+];
+L.marker([3.94796, -74.490332], { icon: iconoLajita })
+    .addTo(map)
+    .bindPopup(crearPopupCarrusel(mediaLajita, "lajita", "🏞️ La Lajita"));
+
+// ================= CONTROL DE CAPAS =================
+var baseMaps = {
+    "🛰️ Google Satélite": googleSatelite,
+    "🗺️ Google Calles": googleCalles,
+    "🌍 Google Híbrido": googleHibrido,
+    "🗺️ OpenStreetMap": osmCalles
+};
+
+var controlLayers = L.control.layers(baseMaps, {}, {
+    collapsed: false,
+    position: 'topright'
+}).addTo(map);
+
+// ================= CARGA DE GEOJSON (VEREDAS Y RÍOS) =================
+const vectorBase = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/Vectorial/";
+
+fetch(vectorBase + "cabrera_veredas.geojson")
+.then(res => {
+    if(!res.ok) throw new Error("No se encontró el archivo de veredas");
+    return res.json();
+})
+.then(data => {
+    var capaVeredas = L.geoJSON(data, {
+        style: { color: "black", weight: 2, fillColor: "black", fillOpacity: 0 },
+        onEachFeature: function(feature, layer) {
+            if (feature.properties && feature.properties.NOMBRE_VER) {
+                layer.bindTooltip(feature.properties.NOMBRE_VER, {
+                    permanent: false,
+                    direction: 'center',
+                    className: 'vereda-tooltip',
+                    sticky: true
+                });
+            }
+        }
+    }).addTo(map);
+    controlLayers.addOverlay(capaVeredas, "🗺️ Veredas de Cabrera");
+})
+.catch(err => console.error("Error cargando veredas:", err));
+
+fetch(vectorBase + "rios_cabrera.geojson")
+.then(res => {
+    if(!res.ok) throw new Error("No se encontró el archivo de ríos");
+    return res.json();
+})
+.then(data => {
+    var capaRios = L.geoJSON(data, {
+        style: { color: "#0066ff", weight: 3, opacity: 0.9, smoothFactor: 1 },
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                var nombreRio = feature.properties.nombre || feature.properties.NOMBRE || feature.properties.name || "Río";
+                layer.bindTooltip("💧 " + nombreRio, {
+                    permanent: false,
+                    direction: 'center',
+                    className: 'rio-tooltip',
+                    sticky: true
+                });
+            }
+        }
+    }).addTo(map);
+    controlLayers.addOverlay(capaRios, "💧 Ríos de Cabrera");
+})
+.catch(err => console.error("Error cargando ríos:", err));
+</script>
+
+</body>
+</html>    top: 20px;
     left: 20px;
     z-index: 1000;
     background: transparent;
