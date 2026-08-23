@@ -70,7 +70,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:
         <p>Activa o desactiva las capas de veredas y ríos en el control superior derecho. Haz clic en los marcadores para explorar los territorios y la memoria local.</p>
         <div class="datos">
             <div class="dato"><strong>🗺️ Capas:</strong> Veredas y Ríos</div>
-            <div class="dato"><strong>📍 Puntos:</strong> 4 localidades registradas</div>
+            <div class="dato"><strong>📍 Puntos:</strong> 7 localidades registradas</div>
         </div>
     </div>
     <div class="mapa-wrapper">
@@ -125,6 +125,8 @@ window.chP = function(id, dir) {
 
 // ================= ICONOS Y MARCADORES =================
 const baseImg = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/P16junio/";
+const basePlantas = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/SantaMarta_Plantas/";
+
 function mkIcon(col, em) {
     return L.divIcon({
         className: 'custom-div-icon',
@@ -162,6 +164,18 @@ L.marker([3.94796, -74.490332], {icon: mkIcon('#27ae60', '🏞️')}).addTo(map)
         {ruta: baseImg + "Lalajita/P4LalajitaV1.mp4", desc: "Video recorrido"}
     ], "l", "🏞️ La Lajita"));
 
+// 5. Planta Algodón
+L.marker([3.98032, -74.49670], {icon: mkIcon('#3498db', '🌾')}).addTo(map)
+    .bindPopup(`<div class="popup"><h4>🌾 Planta Algodón</h4><img src="${basePlantas}P1ALGODON.jpeg" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=No+encontrada'"><p>Zona de Planta Algodón</p></div>`);
+
+// 6. Palma Boba
+L.marker([3.957631, -74.463861], {icon: mkIcon('#16a085', '🌴')}).addTo(map)
+    .bindPopup(`<div class="popup"><h4>🌴 Palma Boba</h4><img src="${basePlantas}P2PALMA_BOBA.jpeg" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=No+encontrada'"><p>Ejemplar de Palma Boba</p></div>`);
+
+// 7. Punta de Lanza
+L.marker([3.952625, -74.455477], {icon: mkIcon('#d35400', '📍')}).addTo(map)
+    .bindPopup(`<div class="popup"><h4>📍 Punta de Lanza</h4><img src="${basePlantas}P3PUNTA_DE_LANZA.jpeg" onerror="this.src='https://via.placeholder.com/400x250/cccccc/666666?text=No+encontrada'"><p>Sector Punta de Lanza</p></div>`);
+
 // ================= CARGA DE CAPAS GEOJSON =================
 const vBase = "https://corcunpaz.github.io/Mapa-Interactivo-Quebrada-Negra-/Vectorial/";
 
@@ -177,10 +191,10 @@ fetch(vBase + "cabrera_veredas.geojson")
     controlLayers.addOverlay(lyr, "🗺️ Veredas de Cabrera");
 }).catch(err => console.error("Error veredas:", err));
 
-// Carga Ríos (Soporta ruta exacta y alternativas sin tilde si el servidor web lo requiere)
+// Carga Ríos
 fetch(vBase + "rios_cabrera.geojson")
 .then(res => {
-    if (!res.ok) return fetch(vBase + "rios_cabrera.geojson"); // intento plano por seguridad
+    if (!res.ok) return fetch(vBase + "rios_cabrera.geojson");
     return res;
 })
 .then(res => {
@@ -197,7 +211,7 @@ fetch(vBase + "rios_cabrera.geojson")
         }
     }).addTo(map);
     controlLayers.addOverlay(lyr, "💧 Ríos de Cabrera");
-}).catch(err => console.error("Error cargando la capa de ríos. Verifica si el archivo 'rios_cabrera.geojson' o 'rios_cabrera.geojson' está en la carpeta Vectorial de GitHub:", err));
+}).catch(err => console.error("Error cargando la capa de ríos:", err));
 </script>
 </body>
 </html>
